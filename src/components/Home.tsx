@@ -1,5 +1,4 @@
-import { BellIcon, ChatAlt2Icon, ChevronRightIcon, FireIcon } from "@heroicons/react/solid";
-import { ChevronLeftIcon } from "@heroicons/react/outline";
+import { BellIcon, ChatAlt2Icon, ChevronRightIcon, ChevronLeftIcon, FireIcon } from "@heroicons/react/solid";
 
 function Home(){
     return (
@@ -79,7 +78,7 @@ function Home(){
                         className="h-12"/>
                 </a>
                 <div className="flex">
-                    <div className="font-medium relative group cursor-pointer flex">
+                    <div className="font-medium relative group cursor-pointer flex z-40">
                         <a className="uppercase hover:text-red-400 p-2 transition" href="/hdh">Hệ điều hành</a>
                         <div className="bg-slate-600 w-48 absolute top-full right-0
                             hidden group-hover:block text-sm">
@@ -105,7 +104,7 @@ function Home(){
                             </div>
                         </div>
                     </div>
-                    <div className="font-medium relative group cursor-pointer flex">
+                    <div className="font-medium relative group cursor-pointer flex z-40">
                         <a className="uppercase hover:text-red-400 p-2 transition" href="/hdh">Phần mềm</a>
                         <div className="bg-slate-600 w-48 absolute top-full right-0
                             hidden group-hover:block text-sm">
@@ -127,17 +126,17 @@ function Home(){
             </div>
             <hr className="opacity-40"/>
             {/* slice bar */}
-            <div className="flex justify-center relative">
-                <div className="px-4 py-6 max-w-fit">
+            <div className="flex justify-center">
+                <div className="px-4 py-6 max-w-fit relative">
                     <img alt="error" src="https://infex-staging.sgp1.digitaloceanspaces.com/sp-standard/sp-demo/courses/images/windows-10.jpg"
                         className=""/>
                     <hr className="border-none w-full h-1 bg-red-400"/>
-                    <button className="absolute bg-black rounded-full p-0.5
+                    <button className="absolute bg-black rounded-full p-0.5 animate-pulse
                             top-1/2 -translate-y-1/2 -translate-x-1/2 shadow shadow-black bg-opacity-80">
                         <ChevronLeftIcon className="w-8 text-red-400"/>
                     </button>
-                    <button className="absolute bg-black rounded-full p-0.5
-                            top-1/2 right-0 -translate-y-1/2 translate-x-1 shadow shadow-black bg-opacity-80">
+                    <button className="absolute bg-black rounded-full p-0.5 animate-pulse
+                            top-1/2 right-0 -translate-y-1/2 shadow shadow-black bg-opacity-80">
                         <ChevronRightIcon className="w-8 text-red-400"/>
                     </button>
                     <ul className="absolute left-1/2 flex -translate-x-1/2 -translate-y-4">
@@ -156,18 +155,21 @@ function Home(){
                 <div className="w-full h-1.5 cursor-pointer bg-slate-600 ml-4 rounded"></div>
             </div>
             {/* new area */}
-            <div className="mx-4 my-3 p-1 pr-0 pb-0 flex bg-slate-600">
-                <div style={{ minWidth: '24rem' }} className="flex-1">
+            <div className="mx-4 my-3 p-0.5 pb-0 flex bg-slate-600">
+                <div className="w-1/2 pb-5">
                     <img alt="error"
                         src="https://lehait.net/wp-content/uploads/2022/10/Ghost.Win10.22H2-750x430.png"
-                        className="w-96 h-44"/>
-                    <p className="my-2 text-red-400 cursor-pointer hover:underline font-medium">
+                        className=""/>
+                    <p className="px-3 my-2 text-red-400 cursor-pointer hover:underline font-medium text-lg">
                         Ghost Win 10 22H2 Home SL & Pro - No & Full Soft, Update October 2022
                     </p>
-                    <div className="flex items-center opacity-90">
+                    <p className="px-3 my-2 text-sm">
+                        Ghost Win 10 22H2 được làm từ bộ cài Win 10 22H2 (Update Build 19045.2130) nguyên gốc lược bỏ các apps không cần thiết, giữ lại Defender và Store.
+                    </p>
+                    <div className="px-3 flex items-center opacity-90">
                         <span>Admin</span>
                         <span className="h-1 w-1 rounded-full bg-slate-400 mx-1.5"></span>
-                        <span>23 Th10, 2022</span>
+                        <span className="text-sm">23 Th10, 2022</span>
                         <div className="flex ml-2 text-red-400">
                             <FireIcon className="w-5"/>
                             <span>27.289</span>
@@ -179,12 +181,12 @@ function Home(){
                         </div>
                     </div>
                 </div>
-                <ul className="w-auto">
-                    <li className="flex flex-col hover:bg-slate-400 group cursor-pointer transition-all">
+                <ul className="w-1/2">
+                    <li className="flex flex-col bg-black hover:bg-slate-400 group cursor-pointer transition-all">
                         <div className="flex p-2">
                             <img alt="error" src="https://lehait.net/wp-content/uploads/2022/07/Ghost.Win10.Pro_.21H2-86x64.jpg"
                                 className="mr-3"/>
-                            <div className="">
+                            <div className="flex-1 flex flex-col justify-between">
                                 <span className="hover:underline font-medium">
                                     Ghost Win 10 Pro 21H2 - No & Full Soft, Update July 2022
                                 </span>
@@ -199,11 +201,11 @@ function Home(){
                         </div>
                         <hr className="border-slate-400"/>
                     </li>
-                    <li className="flex flex-col hover:bg-slate-400 group cursor-pointer transition-all">
+                    <li className="flex flex-col bg-black hover:bg-slate-400 group cursor-pointer transition-all">
                         <div className="flex p-2">
                             <img alt="error" src="https://lehait.net/wp-content/uploads/2022/07/Ghost.Win10.Pro_.21H2-86x64.jpg"
                                 className="mr-3"/>
-                            <div className="">
+                            <div className="flex-1 flex flex-col justify-between">
                                 <span className="hover:underline font-medium">
                                     Ghost Win 10 Pro 21H2 - No & Full Soft, Update July 2022
                                 </span>
@@ -218,11 +220,11 @@ function Home(){
                         </div>
                         <hr className="border-slate-400"/>
                     </li>
-                    <li className="flex flex-col hover:bg-slate-400 group cursor-pointer transition-all">
+                    <li className="flex flex-col bg-black hover:bg-slate-400 group cursor-pointer transition-all">
                         <div className="flex p-2">
                             <img alt="error" src="https://lehait.net/wp-content/uploads/2022/07/Ghost.Win10.Pro_.21H2-86x64.jpg"
                                 className="mr-3"/>
-                            <div className="">
+                            <div className="flex-1 flex flex-col justify-between">
                                 <span className="hover:underline font-medium">
                                     Ghost Win 10 Pro 21H2 - No & Full Soft, Update July 2022
                                 </span>
@@ -237,6 +239,117 @@ function Home(){
                         </div>
                         <hr className="border-slate-400"/>
                     </li>
+                    <li className="flex flex-col bg-black hover:bg-slate-400 group cursor-pointer transition-all">
+                        <div className="flex p-2">
+                            <img alt="error" src="https://lehait.net/wp-content/uploads/2022/07/Ghost.Win10.Pro_.21H2-86x64.jpg"
+                                className="mr-3"/>
+                            <div className="flex-1 flex flex-col justify-between">
+                                <span className="hover:underline font-medium">
+                                    Ghost Win 10 Pro 21H2 - No & Full Soft, Update July 2022
+                                </span>
+                                <div className="flex justify-between opacity-90">
+                                    <span>23 Th10, 2022</span>
+                                    <div className="flex ml-2 text-red-400 group-hover:text-red-700">
+                                        <FireIcon className="w-5"/>
+                                        <span>27.289</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr className="border-slate-400"/>
+                    </li>
+                    <li className="flex flex-col bg-black hover:bg-slate-400 group cursor-pointer transition-all">
+                        <div className="flex p-2">
+                            <img alt="error" src="https://lehait.net/wp-content/uploads/2022/07/Ghost.Win10.Pro_.21H2-86x64.jpg"
+                                className="mr-3"/>
+                            <div className="flex-1 flex flex-col justify-between">
+                                <span className="hover:underline font-medium">
+                                    Ghost Win 10 Pro 21H2 - No & Full Soft, Update July 2022
+                                </span>
+                                <div className="flex justify-between opacity-90">
+                                    <span>23 Th10, 2022</span>
+                                    <div className="flex ml-2 text-red-400 group-hover:text-red-700">
+                                        <FireIcon className="w-5"/>
+                                        <span>27.289</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr className="border-slate-400"/>
+                    </li>
+                </ul>
+            </div>
+            {/* title bar */}
+            <div className="px-4 py-3 flex items-center">
+                <div className="w-12 h-1.5 cursor-pointer bg-slate-600 mr-4 rounded"></div>
+                <span className="mr-1 text-red-400 font-semibold text-lg">WINDOWS</span>
+                <span className="font-semibold text-lg">11</span>
+                <div className="flex-1 h-1.5 cursor-pointer bg-slate-600 ml-4 rounded"></div>
+                {/*  */}
+                <div className="flex items-center ml-5 mr-1 hover:text-red-400 transition-all
+                    cursor-pointer">
+                    <span className="font-bold text-sm">XEM TẤT CẢ</span>
+                    <ChevronRightIcon className="w-7"/>
+                </div>
+            </div>
+            {/* window11 */}
+            <ul className="mx-2.5 my-3 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                <li className="m-1.5">
+                    <div className="relative">
+                        <img alt="error"
+                            src="https://lehait.net/wp-content/uploads/2022/09/Ghost.Win11.22H2.png?v=1664017085"
+                            className="rounded cursor-pointer hover:scale-105 transition-all"/>
+                        <div className="absolute bottom-1.5 right-1.5 flex justify-center items-center
+                            px-2 py-1 rounded-full bg-white">
+                            <span className="text-black font-medium">3.083</span>
+                        </div>
+                    </div>
+                    <div className="text-sm">
+                        <p className="text-lg max-w-full truncate
+                            cursor-pointer font-medium mt-1 mb-1.5 hover:text-red-400 transition-all">
+                            Ghost Win 11 22H2 – No & Full Soft, September 2022
+                        </p>
+                        <span className="text-base opacity-90">Thể loại: </span>
+                        <span className="text-red-400 cursor-pointer hover:underline">Windows 11</span>
+                        <span>, </span>
+                        <span className="text-red-400 cursor-pointer hover:underline">Ghost Window 11</span>
+                    </div>
+                    <div className="mt-1 flex justify-between">
+                        <button className="px-5 py-2.5 bg-slate-600 rounded hover:bg-red-400 transition-all
+                            flex justify-center items-center">
+                            <span className="text-xs font-medium">XEM</span>
+                        </button>
+                        <button className="w-40 bg-slate-600 rounded cursor-default
+                            flex flex-col justify-center items-center">
+                            <span className="text-xs font-medium">ĐÁNH GIÁ 100 ĐIỂM</span>
+                            {/* range */}
+                            <div className="h-2 w-28 mt-1 rounded bg-slate-400">
+                                <div style={{ width: `${78}%` }} className="h-2 bg-red-400 rounded"></div>
+                            </div>
+                        </button>
+                    </div>
+                </li>
+            </ul>
+            {/* footer */}
+            <div className="bg-black px-4 py-3 flex justify-between">
+                <span className="font-medium">Copyright © 2022
+                    <a href="https://github.com/onehitdragon" target="_blank" rel="noreferrer"
+                        className="hover:text-red-400 transition-all"
+                        > https://github.com/onehitdragon</a>
+                </span>
+                <ul className="flex items-center">
+                    <a href="https://discord.gg/rq92vcsV" target="_blank" rel="noreferrer" className="w-6 h-6 cursor-pointer mr-2">
+                        <img alt="error" src="/icon/discord.png" />
+                    </a>
+                    <a href="https://github.com/onehitdragon" target="_blank" rel="noreferrer" className="w-6 h-6 cursor-pointer mr-2">
+                        <img alt="error" src="/icon/github.png" />
+                    </a>
+                    <a href="https://www.youtube.com/channel/UClN-6RYy1Dvr1eAUTqn8HgQ" target="_blank" rel="noreferrer" className="w-6 h-6 cursor-pointer mr-2">
+                        <img alt="error" src="/icon/youtube.png" />
+                    </a>
+                    <a href="https://m.facebook.com/anh.hyvong/" target="_blank" rel="noreferrer" className="w-6 h-6 cursor-pointer">
+                        <img alt="error" src="/icon/facebook.png" />
+                    </a>
                 </ul>
             </div>
         </div>
