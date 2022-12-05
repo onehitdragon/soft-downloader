@@ -3,10 +3,6 @@ export const BASE_URL = 'http://localhost:8080'
 class ApiService {
     private root = BASE_URL;
     private signal: AbortSignal | undefined;
-
-    constructor(){
-        
-    };
     
     getRequestHeader(){
         return {
@@ -36,27 +32,27 @@ class ApiService {
         }
     }
 
-    get(path: string, payload: any){
+    get(path: string, payload?: any){
         return this.request(path, payload, "GET");
     }
 
-    post(path: string, payload: any){
+    post(path: string, payload?: any){
         return this.request(path, payload, "POST");
     }
 
-    postFile(path: string, payload: any){
+    postFile(path: string, payload?: any){
         return this.request(path, payload, "POST", false);
     }
 
-    put(path: string, payload: any){
+    put(path: string, payload?: any){
         return this.request(path, payload, "PUT");
     }
     
-    putFile(path: string, payload: any){
+    putFile(path: string, payload?: any){
         return this.request(path, payload, "PUT", false);
     }
 
-    delete(path: string, payload: any){
+    delete(path: string, payload?: any){
         return this.request(path, payload, "DELETE");
     }
 }
