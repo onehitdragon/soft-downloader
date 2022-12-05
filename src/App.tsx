@@ -3,23 +3,28 @@ import './App.css';
 import Home from './components/Home';
 import { useDispatch } from 'react-redux';
 import { getAllCategoryThunk } from './feature/mainMenu/mainMenuSlice';
+import { getNewestViewingSoft } from './feature/home/homeSlice';
 
 function App() {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
   const [mainMenuLoading, setMainMenuLoading] = useState(true);
+  const [slideBarLoading, setSlideBarLoading] = useState(true);
 
   useEffect(() => {
     dispatch<any>(getAllCategoryThunk(() => {
       setMainMenuLoading(false);
-    }))
+    }));
+    dispatch<any>(getNewestViewingSoft(() => {
+      setSlideBarLoading(false);
+    }));
   }, [dispatch]);
 
   useEffect(() => {
-    if(mainMenuLoading){
+    if(mainMenuLoading && slideBarLoading){
       setLoading(false);
     }
-  }, [mainMenuLoading]);
+  }, [mainMenuLoading, slideBarLoading]);
 
   return (
     <div className="App max-h-screen overflow-y-scroll"

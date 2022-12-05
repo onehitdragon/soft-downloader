@@ -1,0 +1,3 @@
+type HomeState = {
+    listHightestViewing: Soft[]
+}

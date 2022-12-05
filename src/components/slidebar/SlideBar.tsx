@@ -5,7 +5,7 @@ const SlideBar = () => {
     return (
         <div className="flex justify-center">
             <div className="px-4 py-6 max-w-fit relative">
-                <img alt="error" src="https://infex-staging.sgp1.digitaloceanspaces.com/sp-standard/sp-demo/courses/images/windows-10.jpg"
+                <img alt="error" src="/slide/1.jpg"
                     className=""/>
                 <hr className="border-none w-full h-1 bg-red-400"/>
                 <button className="absolute bg-black rounded-full p-0.5 animate-pulse
