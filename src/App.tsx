@@ -4,6 +4,22 @@ import Home from './components/Home';
 import { useDispatch } from 'react-redux';
 import { getAllCategoryThunk } from './feature/mainMenu/mainMenuSlice';
 import { getHightestViewingSoft, getListGhostWin10, getListGhostWin11, getNewestViewingSoft } from './feature/home/homeSlice';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import DetailSoft from './components/DetailSoft';
+
+const router = createBrowserRouter([
+  {
+    path: "/home",
+    element: <Home />,
+  },
+  {
+    path: "/soft/:id",
+    element: <DetailSoft />,
+    loader: ({ params }) => {
+      return params.id;
+    }
+  }
+]);
 
 function App() {
   const dispatch = useDispatch();
@@ -38,7 +54,7 @@ function App() {
       style={{ backgroundImage: 'url(/bg/1.jpg)' }}>
       {
         !loading &&
-        <Home />
+        <RouterProvider router={router}/>
       }
     </div>
   );

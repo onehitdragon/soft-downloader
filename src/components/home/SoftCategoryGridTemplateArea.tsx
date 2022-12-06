@@ -8,7 +8,7 @@ const SoftCategoryGridTemplateArea = ({ softs, category, childCategory }: { soft
                 softs.map((soft) => {
                     const rating = parseInt(Math.random() * 100 as any);
                     return (
-                        <li key={soft.id} className="m-1.5">
+                        <li key={soft.id} className="m-1.5 flex flex-col">
                             <div className="relative">
                                 <img alt="error"
                                     src={ (soft.content.find(content => content.type === "image") as ImageElement).url }
@@ -18,19 +18,28 @@ const SoftCategoryGridTemplateArea = ({ softs, category, childCategory }: { soft
                                     <span className="text-black font-medium">{numberToFloat(soft.amountView)}</span>
                                 </div>
                             </div>
-                            <div className="text-sm">
+                            <div className="text-sm mb-1">
                                 <p className="text-lg max-w-full truncate
                                     cursor-pointer font-medium mt-1 mb-1.5 hover:text-red-400 transition-all">
                                     { soft.title }
                                 </p>
                                 <span className="text-base opacity-90">Thể loại: </span>
-                                <span className="text-red-400 cursor-pointer hover:underline">
-                                    {category.name}
-                                </span>
-                                <span>, </span>
-                                <span className="text-red-400 cursor-pointer hover:underline">{childCategory.name}</span>
+                                {
+                                    soft.childCategories.map((childCategory, idx) => {
+                                        return (
+                                            <span key={idx} className="text-red-400 cursor-pointer hover:underline">
+                                                {childCategory.name}
+                                                {
+                                                    idx + 1 !== soft.childCategories.length &&
+                                                    <span>, </span>
+                                                }
+                                            </span>
+                                        );
+                                    })
+                                }
+                                
                             </div>
-                            <div className="mt-1 flex justify-between">
+                            <div className="mt-auto flex justify-between">
                                 <button className="px-5 py-2.5 bg-slate-600 rounded hover:bg-red-400 transition-all
                                     flex justify-center items-center">
                                     <span className="text-xs font-medium">XEM</span>

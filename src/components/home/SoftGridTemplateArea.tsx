@@ -23,7 +23,7 @@ const SoftGridTemplateArea = ({ softs }: { softs: Soft[] }) => {
                     }
                 </p>
                 <div className="px-3 flex items-center opacity-90">
-                    <span>Admin</span>
+                    <span>{firstSoft.author.fullName}</span>
                     <span className="h-1 w-1 rounded-full bg-slate-400 mx-1.5"></span>
                     <span className="text-sm">
                         {convertDateToString(new Date(firstSoft.createDate))}

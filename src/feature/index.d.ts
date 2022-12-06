@@ -19,7 +19,7 @@ type User = {
     id: number,
     username: string,
     password: string,
-    fullname: string,
+    fullName: string,
     createDate: Date,
     role: Role
 }
@@ -64,4 +64,5 @@ class Soft{
     author: User;
     amountView: number;
     createDate: Date;
+    childCategories: ChildCategory[]
 }
