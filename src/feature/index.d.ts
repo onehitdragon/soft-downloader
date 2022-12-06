@@ -57,11 +57,11 @@ type ImageElement = {
     url: string
 }
 
-type Soft = {
-    id: number,
-    title: string,
-    content: (TitleElement | TextElement | ParaElement | ListElement | ImageElement)[],
-    author: User,
-    amountView: number,
-    createDate: Date
+class Soft{
+    id: number;
+    title: string;
+    content: (TitleElement | TextElement | ParaElement | ListElement | ImageElement)[];
+    author: User;
+    amountView: number;
+    createDate: Date;
 }

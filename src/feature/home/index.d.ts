@@ -1,3 +1,6 @@
 type HomeState = {
-    listHightestViewing: Soft[]
+    listHightestViewing: Soft[],
+    listNewestViewing: Soft[],
+    listGhostWin11: Soft[],
+    listGhostWin10: Soft[]
 }
