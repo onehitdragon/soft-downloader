@@ -1,0 +1,3 @@
+type MainMenuState = {
+    categories: Category[]
+}
