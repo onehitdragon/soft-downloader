@@ -10,7 +10,7 @@ const HeaderBar = () => {
                 <a href="https://myvonlinechat.herokuapp.com"
                     className="text-red-400 hover:underline">Web chat</a> nhắn tin, gọi video
             </div>
-            {/* <SeachBar /> */}
+            <SeachBar />
             <div className="flex items-center text-sm uppercase font-medium relative">
                 <button className="w-7 h-7 flex items-center justify-center z-0
                     relative after:top-0 after:left-0 after:bg-slate-400 after:w-full after:h-full after:-z-10

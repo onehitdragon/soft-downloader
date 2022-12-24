@@ -32,3 +32,56 @@
     transform: rotate(360deg);
   }
 }
+
+/* width */
+.main-scroll-bar::-webkit-scrollbar {
+  width: 4px;
+  cursor: pointer;
+}
+
+/* Track */
+.main-scroll-bar::-webkit-scrollbar-track {
+  background: transparent;
+  cursor: pointer;
+  transform: translateX(-5px);
+}
+
+/* Handle */
+.main-scroll-bar::-webkit-scrollbar-thumb {
+  background-image: linear-gradient(-45deg, #EF4444, #EF4444);
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Handle on hover */
+.main-scroll-bar::-webkit-scrollbar-thumb:hover {
+  background-image: linear-gradient(-45deg, #EF4444, #EF4444);
+  cursor: pointer;
+}
+
+/* width */
+.no-scroll-bar::-webkit-scrollbar {
+  width: 0px;
+}
+
+.animation-flicker {
+  animation: flicker 1s infinite ease-in-out;
+}
+@keyframes flicker {
+  0% {
+    color: black;
+  }
+  50% {
+    color: black;
+  }
+  75% {
+    color: white;
+  }
+  100% {
+    color: white;
+  }
+}
+
+.main-scroll-bar--no::-webkit-scrollbar{
+  width: 0px;
+}

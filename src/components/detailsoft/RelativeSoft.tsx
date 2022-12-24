@@ -2,9 +2,11 @@ import { memo, useEffect, useState } from "react";
 import { FireIcon } from "@heroicons/react/solid";
 import api from "../../util/api";
 import { convertDateToString, numberToFloat } from "../../util/convert";
+import { useNavigate } from "react-router";
 
 const RelativeSoft = ({ soft }: { soft: Soft }) => {
     const [listRelativeSoft, setListRelativeSoft] = useState<Soft[] | null>(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         api.get(`/soft/getbychildcategory/?childCategoryId=${soft.childCategories[0].id}`)
@@ -21,7 +23,7 @@ const RelativeSoft = ({ soft }: { soft: Soft }) => {
         .catch((err) => {
             console.log(err);
         })
-    }, [])
+    }, [soft])
 
     return (
         <div style={{ minWidth: '400px' }} className="ml-5 hidden lg:block">
@@ -37,7 +39,8 @@ const RelativeSoft = ({ soft }: { soft: Soft }) => {
                                 return "";
                             }
                             return (
-                                <li key={soft.id}  className="flex flex-col bg-black hover:bg-slate-400 group cursor-pointer transition-all">
+                                <li key={relativeSoft.id}  className="flex flex-col bg-black hover:bg-slate-400 group cursor-pointer transition-all"
+                                    onClick={() => { navigate(`/soft/${relativeSoft.id}`) }}>
                                     <div className="flex p-2">
                                         <img alt="error"
                                             src={(relativeSoft.content.find(content => content.type === "image") as ImageElement).url}

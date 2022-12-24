@@ -1,13 +1,15 @@
 import { memo } from "react";
 import { ChatAlt2Icon, FireIcon } from "@heroicons/react/solid";
 import { convertDateToString, numberToFloat } from "../../util/convert";
+import { useNavigate } from "react-router";
 
 const SoftGridTemplateArea = ({ softs }: { softs: Soft[] }) => {
     const firstSoft = softs[2];
+    const navigate = useNavigate();
 
     return (
         <div className="mx-4 my-3 p-0.5 pb-0 flex bg-slate-600">
-            <div className="w-1/2 pb-5">
+            <div className="w-1/2 pb-5" onClick={() => { navigate(`/soft/${firstSoft.id}`) }}>
                 <img alt="error"
                     src={
                         (firstSoft.content.find(content => content.type === "image") as ImageElement).url
@@ -44,7 +46,8 @@ const SoftGridTemplateArea = ({ softs }: { softs: Soft[] }) => {
                     softs.map((soft) => {
                         if(soft.id !== firstSoft.id){
                             return (
-                                <li key={soft.id} className="flex flex-col bg-black hover:bg-slate-400 group cursor-pointer transition-all">
+                                <li key={soft.id} className="flex flex-col bg-black hover:bg-slate-400 group cursor-pointer transition-all"
+                                    onClick={() => { navigate(`/soft/${soft.id}`) }}>
                                     <div className="flex p-2">
                                         <img alt="error"
                                             src={

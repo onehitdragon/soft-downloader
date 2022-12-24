@@ -27,7 +27,7 @@ const DetailSoft = () => {
         .catch((err) => {
             console.log(err);
         })
-    }, [])
+    }, [idSoft])
 
     return (
         <div className="mx-14 my-4 bg-slate-700 text-white">
