@@ -1,5 +1,6 @@
 import { memo } from "react"
 import { useNavigate } from "react-router";
+import { BASE_URL } from "../../util/api";
 import { numberToFloat } from "../../util/convert";
 
 const SoftCategoryGridTemplateArea = ({ softs, category, childCategory }: { softs: Soft[], category: Category, childCategory: ChildCategory}) => {
@@ -14,7 +15,7 @@ const SoftCategoryGridTemplateArea = ({ softs, category, childCategory }: { soft
                         <li key={soft.id} className="m-1.5 flex flex-col">
                             <div className="relative" onClick={() => { navigate(`/soft/${soft.id}`) }}>
                                 <img alt="error"
-                                    src={ (soft.content.find(content => content.type === "image") as ImageElement).url }
+                                    src={ BASE_URL + (soft.content.find(content => content.type === "image") as ImageElement).url }
                                     className="rounded cursor-pointer hover:scale-105 transition-all"/>
                                 <div className="absolute bottom-1.5 right-1.5 flex justify-center items-center
                                     px-2 py-1 rounded-full bg-white">

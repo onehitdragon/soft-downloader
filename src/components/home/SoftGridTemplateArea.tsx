@@ -2,6 +2,7 @@ import { memo } from "react";
 import { ChatAlt2Icon, FireIcon } from "@heroicons/react/solid";
 import { convertDateToString, numberToFloat } from "../../util/convert";
 import { useNavigate } from "react-router";
+import { BASE_URL } from "../../util/api";
 
 const SoftGridTemplateArea = ({ softs }: { softs: Soft[] }) => {
     const firstSoft = softs[2];
@@ -12,7 +13,7 @@ const SoftGridTemplateArea = ({ softs }: { softs: Soft[] }) => {
             <div className="w-1/2 pb-5" onClick={() => { navigate(`/soft/${firstSoft.id}`) }}>
                 <img alt="error"
                     src={
-                        (firstSoft.content.find(content => content.type === "image") as ImageElement).url
+                        BASE_URL + (firstSoft.content.find(content => content.type === "image") as ImageElement).url
                     }
                     className=""/>
                 <p className="px-3 my-2 text-red-400 cursor-pointer hover:underline font-medium text-lg">
@@ -51,7 +52,7 @@ const SoftGridTemplateArea = ({ softs }: { softs: Soft[] }) => {
                                     <div className="flex p-2">
                                         <img alt="error"
                                             src={
-                                                (soft.content.find(content => content.type === "image") as ImageElement).url
+                                                BASE_URL + (soft.content.find(content => content.type === "image") as ImageElement).url
                                             }
                                             className="mr-3 w-40"/>
                                         <div className="flex-1 flex flex-col justify-between">

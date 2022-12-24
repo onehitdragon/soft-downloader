@@ -1,6 +1,6 @@
 import { memo, useEffect, useState } from "react";
 import { FireIcon } from "@heroicons/react/solid";
-import api from "../../util/api";
+import api, { BASE_URL } from "../../util/api";
 import { convertDateToString, numberToFloat } from "../../util/convert";
 import { useNavigate } from "react-router";
 
@@ -43,7 +43,7 @@ const RelativeSoft = ({ soft }: { soft: Soft }) => {
                                     onClick={() => { navigate(`/soft/${relativeSoft.id}`) }}>
                                     <div className="flex p-2">
                                         <img alt="error"
-                                            src={(relativeSoft.content.find(content => content.type === "image") as ImageElement).url}
+                                            src={BASE_URL + (relativeSoft.content.find(content => content.type === "image") as ImageElement).url}
                                             className="mr-3 w-40"/>
                                         <div className="flex-1 flex flex-col justify-between">
                                             <span className="hover:underline font-medium">
