@@ -66,3 +66,11 @@ class Soft{
     createDate: Date;
     childCategories: ChildCategory[]
 }
+
+type SoftComment = {
+    id: number,
+    content: string,
+    commenter: User,
+    createDate: Date,
+    replyComments: null | SoftComment[]
+}

@@ -1,5 +1,4 @@
 import { ChatAlt2Icon, FireIcon } from "@heroicons/react/solid";
-import { ClockIcon, TrendingUpIcon } from "@heroicons/react/outline";
 import { memo, useEffect, useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import Footer from "./footer/Footer";
@@ -9,10 +8,12 @@ import api from "../util/api";
 import { convertDateToString, numberToFloat } from "../util/convert";
 import ContentSoft from "./detailsoft/ContentSoft";
 import RelativeSoft from "./detailsoft/RelativeSoft";
+import CommentTree from "./detailsoft/CommentTree";
 
 const DetailSoft = () => {
     const idSoft = useLoaderData();
     const [soft, setSoft] = useState<Soft | null>(null);
+    const [comments, setComments] = useState<SoftComment[] | null>(null);
 
     useEffect(() => {
         api.get(`/soft/${idSoft}`)
@@ -29,6 +30,17 @@ const DetailSoft = () => {
         })
 
         api.put(`/soft/addViewingSoft/${idSoft}`)
+        .catch((err) => {
+            console.log(err);
+        })
+
+        api.get(`/comment/getall/${idSoft}`)
+        .then((res) => {
+            return res?.json();
+        })
+        .then((comments: SoftComment[]) => {
+            setComments(comments);
+        })
         .catch((err) => {
             console.log(err);
         })
@@ -70,124 +82,11 @@ const DetailSoft = () => {
                     <div className="mx-4 my-3 flex">
                         <div className="w-full">
                             <ContentSoft content={soft.content}/>
-
-                            {/* comment */}
-                            <div className="bg-black p-4">
-                                {/*  */}
-                                <div className="flex items-center">
-                                    <span className="text-2xl font-bold">
-                                        BÌNH LUẬN
-                                    </span>
-                                    <div className="flex-1 h-1 cursor-pointer bg-red-400 ml-4 rounded"></div>
-                                </div>
-                                {/* reply form */}
-                                <div className="flex m-3 ml-0">
-                                    <div className="">
-                                        <img className="w-12 rounded-full bg-white" alt="error"
-                                            src="/gamer-icon.png"/>
-                                    </div>
-                                    <div className="flex flex-col items-end ml-3 flex-1">
-                                        <textarea className="outline-0 text-black rounded p-1.5 w-full"
-                                            placeholder="Viết bình luận..."/>
-                                        <button className="mt-1.5 bg-emerald-400 px-3 py-1 rounded
-                                            hover:bg-emerald-500 transition-all w-fit">
-                                            Đăng bình luận
-                                        </button>
-                                    </div>
-                                </div>
-                                <hr className="opacity-40"/>
-                                {/* comment-1 */}
-                                <div>
-                                    <div className="flex m-3 ml-0">
-                                        <div className="">
-                                            <img className="w-12 rounded-full bg-white" alt="error"
-                                                src="/gamer-icon.png"/>
-                                        </div>
-                                        <div className="ml-3">
-                                            <div className="flex items-center">
-                                                <span className="font-medium text-emerald-400 mr-2.5">Ngô Minh Quân</span>
-                                                <ClockIcon className="w-4 opacity-90 mr-1"/>
-                                                <span className="text-xs opacity-90">8 ngày trước</span>
-                                            </div>
-                                            <div>
-                                                <span>
-                                                    cho mình hỏi bản coop nhẹ hơn bản chơi đơn thì nó có đầy đủ như bản đơn ko ạ. tks
-                                                </span>
-                                            </div>
-                                            <button className="mt-1.5 ml-1.5 flex items-center opacity-80 hover:opacity-100 transition-all">
-                                                <TrendingUpIcon className="w-5 mr-1"/>
-                                                <span className="text-sm">Trả lời</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    {/* reply form */}
-                                    <div className="flex m-3 ml-0">
-                                        <div className="">
-                                            <img className="w-12 rounded-full bg-white" alt="error"
-                                                src="/gamer-icon.png"/>
-                                        </div>
-                                        <div className="flex flex-col items-end ml-3 flex-1">
-                                            <textarea className="outline-0 text-black rounded p-1.5 w-full"
-                                                placeholder="Trả lời..."/>
-                                            <button className="mt-1.5 bg-emerald-400 px-3 py-1 rounded
-                                                hover:bg-emerald-500 transition-all w-fit">
-                                                Đăng bình luận
-                                            </button>
-                                        </div>
-                                    </div>
-                                    {/* reply */}
-                                    <div className="ml-12">
-                                        <div className="flex m-3 ml-0">
-                                            <div className="">
-                                                <img className="w-12 rounded-full bg-white" alt="error"
-                                                    src="/gamer-icon.png"/>
-                                            </div>
-                                            <div className="ml-3">
-                                                <div className="flex items-center">
-                                                    <span className="font-medium text-emerald-400 mr-2.5">Ngô Minh Quân</span>
-                                                    <ClockIcon className="w-4 opacity-90 mr-1"/>
-                                                    <span className="text-xs opacity-90">8 ngày trước</span>
-                                                </div>
-                                                <div>
-                                                    <span>
-                                                        cho mình hỏi bản coop nhẹ hơn bản chơi đơn thì nó có đầy đủ như bản đơn ko ạ. tks
-                                                    </span>
-                                                </div>
-                                                <button className="mt-1.5 ml-1.5 flex items-center opacity-80 hover:opacity-100 transition-all">
-                                                    <TrendingUpIcon className="w-5 mr-1"/>
-                                                    <span className="text-sm">Trả lời</span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div className="flex m-3 ml-0">
-                                            <div className="">
-                                                <img className="w-12 rounded-full bg-white" alt="error"
-                                                    src="/gamer-icon.png"/>
-                                            </div>
-                                            <div className="ml-3">
-                                                <div className="flex items-center">
-                                                    <span className="font-medium text-emerald-400 mr-2.5">Ngô Minh Quân</span>
-                                                    <ClockIcon className="w-4 opacity-90 mr-1"/>
-                                                    <span className="text-xs opacity-90">8 ngày trước</span>
-                                                </div>
-                                                <div>
-                                                    <span>
-                                                        cho mình hỏi bản coop nhẹ hơn bản chơi đơn thì nó có đầy đủ như bản đơn ko ạ. tks
-                                                    </span>
-                                                </div>
-                                                <button className="mt-1.5 ml-1.5 flex items-center opacity-80 hover:opacity-100 transition-all">
-                                                    <TrendingUpIcon className="w-5 mr-1"/>
-                                                    <span className="text-sm">Trả lời</span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                            </div>
+                            {
+                                comments !== null &&
+                                <CommentTree comments={comments}/>
+                            }
                         </div>
-
-                        {/* post side */}
                         <RelativeSoft soft={soft}/>
                     </div>
                 </>
