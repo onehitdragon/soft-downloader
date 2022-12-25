@@ -3,12 +3,14 @@ import reduxThunk from "redux-thunk";
 import mainMenuReducer from "./mainMenu/mainMenuSlice";
 import homeReducer from "./home/homeSlice";
 import filterReducer from "./filter/filterSlice";
+import profileReducer from "./profile/profileSlice";
 
 const store = configureStore({
     reducer: {
         mainMenu: mainMenuReducer,
         home: homeReducer,
-        filter: filterReducer
+        filter: filterReducer,
+        profile: profileReducer
     },
     middleware: [reduxThunk]
 });

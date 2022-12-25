@@ -1,9 +1,15 @@
 import { BellIcon } from "@heroicons/react/solid";
 import { memo } from "react"
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router";
+import { RootState } from "../../feature/store";
 import NotificationPopup from "../notification/NotificationPopup";
 import SeachBar from "../searchbar/SeachBar";
 
 const HeaderBar = () => {
+    const navigate = useNavigate();
+    const user = useSelector<RootState, User | null>(state => state.profile.user);
+
     return (
         <div className="px-3 py-2 flex items-center justify-between">
             <div className="text-sm">
@@ -18,8 +24,19 @@ const HeaderBar = () => {
                     <BellIcon className="w-5 hover:text-red-400 transition"/>
                 </button>
                 {/* <NotificationPopup /> */}
-                <a href="/login" className="hover:underline hover:text-red-400 transition mx-2">Đăng nhập</a>
-                <a href="/register" className="hover:underline hover:text-red-400 transition">Đăng ký</a>
+                {
+                    user === null ?
+                    <>
+                        <span className="hover:underline hover:text-red-400 transition mx-2 cursor-pointer"
+                            onClick={() => { navigate("/login") }}>Đăng nhập</span>
+                        <span className="hover:underline hover:text-red-400 transition cursor-pointer"
+                            onClick={() => { navigate("/register") }}>Đăng ký</span>
+                    </>
+                    :
+                    <span className="mx-2 normal-case">
+                        Chào, <span className="text-red-400">{user.fullName}</span>
+                    </span>
+                }
             </div>
         </div>
     );

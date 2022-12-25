@@ -7,6 +7,7 @@ import { getHightestViewingSoft, getListGhostWin10, getListGhostWin11, getNewest
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import DetailSoft from './components/DetailSoft';
 import Filter from './components/Filter';
+import Login from './components/Login';
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
   {
     path: "/filter",
     element: <Filter />
+  },
+  {
+    path: "/login",
+    element: <Login />
   }
 ]);
 
@@ -55,7 +60,7 @@ function App() {
   }, [mainMenuLoading, homeLoading]);
 
   return (
-    <div className="App max-h-screen overflow-y-scroll"
+    <div className="App max-h-screen min-h-screen overflow-y-scroll"
       style={{ backgroundImage: 'url(/bg/1.jpg)' }}>
       {
         !loading &&

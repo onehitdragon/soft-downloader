@@ -12,7 +12,7 @@ type Category = {
 
 type Role = {
     id: number,
-    name: string
+    name: "User" | "Admin"
 }
 
 type User = {

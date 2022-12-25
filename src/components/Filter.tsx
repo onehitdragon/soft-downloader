@@ -10,6 +10,7 @@ import { RootState } from "../feature/store";
 import { Sort } from "../feature/filter/Sort.enum";
 import { Order } from "../feature/filter/Order.enum";
 import { updateCurOrder, updateCurSort } from "../feature/filter/filterSlice";
+import Footer from "./footer/Footer";
 
 const Filter = () => {
     const curSort = useSelector<RootState, Sort>(state => state.filter.curSort);
@@ -59,7 +60,7 @@ const Filter = () => {
                    <li className="flex items-center mx-5 my-3.5">
                         <span className="mr-7 text-sm font-medium">Sắp xếp</span>
                         <Listbox>
-                            <div className="relative w-36 text-black text-sm z-50">
+                            <div className="relative w-36 text-black text-sm z-30">
                                 <Listbox.Button className="rounded
                                     px-2 py-1.5 text-left bg-white w-full">
                                     <div className="flex justify-between">
@@ -80,7 +81,7 @@ const Filter = () => {
                    <li className="flex items-center mx-5 my-3.5">
                         <span className="mr-7 text-sm font-medium">Thứ tự</span>
                         <Listbox>
-                            <div className="relative w-36 text-black text-sm z-50">
+                            <div className="relative w-36 text-black text-sm z-30">
                                 <Listbox.Button className="rounded
                                     px-2 py-1.5 text-left bg-white w-full">
                                     <div className="flex justify-between">
@@ -104,6 +105,7 @@ const Filter = () => {
             <SoftCategoryGridTemplateArea 
                 softs={softs}
             />
+            <Footer />
         </div>
     );
 }
