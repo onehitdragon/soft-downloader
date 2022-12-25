@@ -1,46 +1,36 @@
-import { memo, useEffect, useState } from "react"
-import { useDispatch, useSelector } from "react-redux";
+import { memo, useState } from "react"
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
-import { loginThunk } from "../feature/profile/profileSlice";
-import { RootState } from "../feature/store";
+import { registerThunk } from "../feature/profile/profileSlice";
 import Footer from "./footer/Footer";
 import HeaderBar from "./headerbar/HeaderBar";
 import NormalLoading from "./loading/NormalLoading";
 import MainMenu from "./main-menu/MainMenu";
 
-const Login = () => {
+const Register = () => {
     const [username, setUsername] = useState("");
+    const [fullname, setFullname] = useState("");
     const [password, setPassword] = useState("");
-    const [logining, setLogining] = useState(false);
-    const [lableButtonLogin, setLableButtonLogin] = useState("Đăng nhập");
+    const [registing, setRegisting] = useState(false);
+    const [lableButtonRegister, setLableButtonRegister] = useState("Đăng ký");
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const handleLogin = () => {
-        setLogining(true);
+    const handleRegister = () => {
+        setRegisting(true);
         setTimeout(() => {
-            dispatch<any>(loginThunk(
-                username,
-                password,
+            dispatch<any>(registerThunk(username, password, fullname,
                 (result) => {
-                    setLogining(false);
                     if(!result){
-                        setLableButtonLogin("Sai tài khoản");
+                        setLableButtonRegister("Tài khoản tồn tại");
+                        setRegisting(false);
                     }
                     else{
                         navigate("/home");
                     }
-                }
-            ));
-        }, 2500)
+                }));
+        }, 2500);
     }
-
-    const user = useSelector<RootState, User | null>(state => state.profile.user);
-    useEffect(() => {
-        if(user !== null){
-            navigate("/home");
-        }
-    }, [user, navigate])
 
     return (
         <div className="mx-14 my-4 bg-slate-700 text-white">
@@ -48,7 +38,7 @@ const Login = () => {
             <MainMenu />
             <div className="mx-4 my-3 flex items-center">
                 <span className="text-2xl font-bold">
-                    Đăng Nhập
+                    Đăng Ký
                 </span>
                 <div className="flex-1 h-1 cursor-pointer bg-red-400 ml-4 rounded"></div>
             </div>
@@ -60,23 +50,28 @@ const Login = () => {
                             className="text-black px-2.5 py-1.5 outline-none rounded-sm bg-slate-50"/>
                     </div>
                     <div className="flex flex-col w-full my-1.5">
+                        <span className="font-medium mb-2">Tên bạn<span className="opacity-80 ml-1"> *</span></span>
+                        <input type="text" onChange={(e) => { setFullname(e.target.value) }} value={fullname}
+                            className="text-black px-2.5 py-1.5 outline-none rounded-sm bg-slate-50"/>
+                    </div>
+                    <div className="flex flex-col w-full my-1.5">
                         <span className="font-medium mb-2">Mật khẩu<span className="opacity-80 ml-1"> *</span></span>
                         <input type="password" autoComplete="on" onChange={(e) => { setPassword(e.target.value) }} value={password}
                             className="text-black px-2.5 py-1.5 outline-none rounded-sm bg-slate-50"/>
                     </div>
                     <div className="flex w-full my-1.5">
                         {
-                            logining ?
+                            registing ?
                             <NormalLoading className="w-1/2 mr-2"/>
                             :
                             <button className="w-1/2 mr-1.5 bg-red-600 p-1.5 rounded font-medium hover:opacity-95"
-                                onClick={(() => { handleLogin() })}>
-                                    {lableButtonLogin}
-                                </button>
+                                onClick={(() => { handleRegister() })}>
+                                    {lableButtonRegister}
+                            </button>
                         }
                         <button className="w-1/2 ml-1.5 bg-red-600 p-1.5 rounded font-medium text-slate-400 hover:opacity-95"
-                            onClick={() => { navigate("/register") }}>
-                            Đăng ký</button>
+                            onClick={() => { navigate("/login") }}>
+                            Đăng nhập</button>
                     </div>
                 </div>
             </form>
@@ -85,4 +80,4 @@ const Login = () => {
     );
 }
 
-export default memo(Login);
+export default memo(Register);

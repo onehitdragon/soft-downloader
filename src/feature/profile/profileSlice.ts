@@ -43,4 +43,32 @@ function loginThunk(username: string, password: string, whenLoaded?: (result: bo
     return thunk;
 }
 
-export {loginThunk}
+function registerThunk(username: string, password: string, fullname: string, whenLoaded?: (result: boolean) => any){
+    const thunk: ThunkAction<void, RootState, unknown, AnyAction> = (dispatch, getState) => {
+        const formData = new FormData();
+        formData.append("username", username);
+        formData.append("password", password);
+        formData.append("fullname", fullname);
+        api.postFile("/user/register", formData)
+        .then((res) => {
+            return res?.json();
+        })
+        .then((data: { status: "success" | "error", option: User}) => {
+            console.log(data);
+            if(data.status === "success"){
+                dispatch(updateUser(data.option));
+                whenLoaded?.(true);
+            }
+            else{
+                whenLoaded?.(false);
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+    }
+
+    return thunk;
+}
+
+export {loginThunk, registerThunk}
