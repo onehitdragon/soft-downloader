@@ -1,10 +1,22 @@
 import { memo } from "react"
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
+import { getSoftsByChildCategory } from "../../feature/filter/filterSlice";
 import { BASE_URL } from "../../util/api";
 import { numberToFloat } from "../../util/convert";
 
-const SoftCategoryGridTemplateArea = ({ softs, category, childCategory }: { softs: Soft[], category: Category, childCategory: ChildCategory}) => {
+const SoftCategoryGridTemplateArea = ({ softs }: { softs: Soft[] }) => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const handleChildCagegoryClick = (childCategory: ChildCategory) => {
+        dispatch<any>(getSoftsByChildCategory(
+            childCategory,
+            () => {
+                navigate("/filter");
+            }
+        ));
+    }
     
     return (
         <ul className="mx-2.5 my-3 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
@@ -32,7 +44,8 @@ const SoftCategoryGridTemplateArea = ({ softs, category, childCategory }: { soft
                                 {
                                     soft.childCategories.map((childCategory, idx) => {
                                         return (
-                                            <span key={idx} className="text-red-400 cursor-pointer hover:underline">
+                                            <span key={idx} className="text-red-400 cursor-pointer hover:underline"
+                                                onClick={() => { handleChildCagegoryClick(childCategory); }}>
                                                 {childCategory.name}
                                                 {
                                                     idx + 1 !== soft.childCategories.length &&
@@ -67,3 +80,7 @@ const SoftCategoryGridTemplateArea = ({ softs, category, childCategory }: { soft
 }
 
 export default memo(SoftCategoryGridTemplateArea);
+
+function dispatch<T>(arg0: any) {
+    throw new Error("Function not implemented.");
+}

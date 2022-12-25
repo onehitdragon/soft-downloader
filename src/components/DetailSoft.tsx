@@ -27,6 +27,11 @@ const DetailSoft = () => {
         .catch((err) => {
             console.log(err);
         })
+
+        api.put(`/soft/addViewingSoft/${idSoft}`)
+        .catch((err) => {
+            console.log(err);
+        })
     }, [idSoft])
 
     return (

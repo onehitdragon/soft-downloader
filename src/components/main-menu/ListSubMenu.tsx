@@ -12,7 +12,7 @@ const ListSubMenu = () => {
                 categories.map((category) => {
                     return (
                         <div key={category.id} className="font-medium relative group cursor-pointer flex z-40">
-                            <a className="uppercase hover:text-red-400 p-2 transition" href="/hdh">{category.name}</a>
+                            <span className="uppercase hover:text-red-400 p-2 transition">{category.name}</span>
                             <ListSubMenuItem childCategories={category.childCategories}/>
                         </div>
                     );
