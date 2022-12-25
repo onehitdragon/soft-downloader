@@ -1,20 +1,38 @@
-import { memo, useEffect, useState } from "react"
+import { memo, useEffect } from "react"
 import HeaderBar from "./headerbar/HeaderBar";
 import MainMenu from "./main-menu/MainMenu";
 import { Listbox } from "@headlessui/react";
 import { SwitchHorizontalIcon, CheckIcon } from "@heroicons/react/solid";
 import SoftCategoryGridTemplateArea from "./home/SoftCategoryGridTemplateArea";
 import { useNavigate } from "react-router";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../feature/store";
-
-const sorts = ["Xem nhiều nhất", "Mới nhất"];
-
-const orders = ["Tăng dần", "Giảm dần"];
+import { Sort } from "../feature/filter/Sort.enum";
+import { Order } from "../feature/filter/Order.enum";
+import { updateCurOrder, updateCurSort } from "../feature/filter/filterSlice";
 
 const Filter = () => {
-    const [curSort, setCurSort] = useState<string>(sorts[0]);
-    const [curOrder, setCurOrder] = useState<string>(orders[0]);
+    const curSort = useSelector<RootState, Sort>(state => state.filter.curSort);
+    const curOrder = useSelector<RootState, Order>(state => state.filter.curOrder);
+    const dispatch = useDispatch();
+    
+    const enumToOptions = (ee: any, selected: any, onSelected: (e: any) => any) => {
+        return Object.keys(ee).map((e) => {
+            return (
+                <Listbox.Option key={ee[e]} value={""} className="px-2 py-1.5 hover:bg-red-400 hover:text-white transition-all"
+                    onClick={(() => { onSelected(ee[e]) })}>
+                    <div className="cursor-default flex">
+                        {
+                            ee[e] === selected &&
+                            <CheckIcon className="w-5 mr-1 text-red-600"/>
+                        }
+                        <span>{ee[e]}</span>
+                    </div>
+                </Listbox.Option>
+            );
+        })
+    }
+
     const navigate = useNavigate();
     const childCategory = useSelector<RootState, ChildCategory | null>(state => state.filter.curChildCategory);
     const softs = useSelector<RootState, Soft[]>(state => state.filter.softs);
@@ -24,6 +42,7 @@ const Filter = () => {
             navigate("/home");
         }
     }, [childCategory, navigate])
+
 
     return (
         <div className="mx-14 my-4 bg-slate-700 text-white">
@@ -40,7 +59,7 @@ const Filter = () => {
                    <li className="flex items-center mx-5 my-3.5">
                         <span className="mr-7 text-sm font-medium">Sắp xếp</span>
                         <Listbox>
-                            <div className="relative w-36 text-black text-sm">
+                            <div className="relative w-36 text-black text-sm z-50">
                                 <Listbox.Button className="rounded
                                     px-2 py-1.5 text-left bg-white w-full">
                                     <div className="flex justify-between">
@@ -49,20 +68,9 @@ const Filter = () => {
                                     </div>
                                 </Listbox.Button>
                                 <Listbox.Options className="absolute w-full rounded bg-white py-0.5 mt-1">
-                                    {
-                                        sorts.map((sort) => {
-                                            return (
-                                                <Listbox.Option key={sort} value={""} className="px-2 py-1.5 hover:bg-red-400 hover:text-white transition-all"
-                                                    onClick={(() => { setCurSort(sort) })}>
-                                                    <div className="cursor-default flex">
-                                                        {
-                                                            sort === curSort &&
-                                                            <CheckIcon className="w-5 mr-1 text-red-600"/>
-                                                        }
-                                                        <span>{sort}</span>
-                                                    </div>
-                                                </Listbox.Option>
-                                            );
+                                    { 
+                                        enumToOptions(Sort, curSort, (e) => {
+                                            dispatch(updateCurSort(e));
                                         })
                                     }
                                 </Listbox.Options>
@@ -72,7 +80,7 @@ const Filter = () => {
                    <li className="flex items-center mx-5 my-3.5">
                         <span className="mr-7 text-sm font-medium">Thứ tự</span>
                         <Listbox>
-                            <div className="relative w-36 text-black text-sm">
+                            <div className="relative w-36 text-black text-sm z-50">
                                 <Listbox.Button className="rounded
                                     px-2 py-1.5 text-left bg-white w-full">
                                     <div className="flex justify-between">
@@ -81,20 +89,9 @@ const Filter = () => {
                                     </div>
                                 </Listbox.Button>
                                 <Listbox.Options className="absolute w-full rounded bg-white py-0.5 mt-1">
-                                    {
-                                        orders.map((order) => {
-                                            return (
-                                                <Listbox.Option key={order} value={""} className="px-2 py-1.5 hover:bg-red-400 hover:text-white transition-all"
-                                                    onClick={(() => { setCurOrder(order) })}>
-                                                    <div className="cursor-default flex">
-                                                        {
-                                                            order === curOrder &&
-                                                            <CheckIcon className="w-5 mr-1 text-red-600"/>
-                                                        }
-                                                        <span>{order}</span>
-                                                    </div>
-                                                </Listbox.Option>
-                                            );
+                                    { 
+                                        enumToOptions(Order, curOrder, (e) => {
+                                            dispatch(updateCurOrder(e));
                                         })
                                     }
                                 </Listbox.Options>
