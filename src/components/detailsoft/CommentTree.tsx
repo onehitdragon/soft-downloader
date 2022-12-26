@@ -1,7 +1,8 @@
 import { memo } from "react";
 import CommentTreeItem from "./CommentTreeItem";
+import CommentWriter from "./CommentWriter";
 
-const CommentTree = ({ comments }: { comments: SoftComment[] }) => {
+const CommentTree = ({ comments, handleWhenComment, handleWhenReply }: { comments: SoftComment[], handleWhenComment: (commenterId: number, content: string) => any , handleWhenReply: (commenterId: number, content: string, receivedCommentId: number) => any}) => {
     return (
         <div className="bg-black p-4">
             {/*  */}
@@ -11,26 +12,13 @@ const CommentTree = ({ comments }: { comments: SoftComment[] }) => {
                 </span>
                 <div className="flex-1 h-1 cursor-pointer bg-red-400 ml-4 rounded"></div>
             </div>
-            {/* reply form */}
-            <div className="flex m-3 ml-0">
-                <div className="">
-                    <img className="w-12 rounded-full bg-white" alt="error"
-                        src="/gamer-icon.png"/>
-                </div>
-                <div className="flex flex-col items-end ml-3 flex-1">
-                    <textarea className="outline-0 text-black rounded p-1.5 w-full"
-                        placeholder="Viết bình luận..."/>
-                    <button className="mt-1.5 bg-emerald-400 px-3 py-1 rounded
-                        hover:bg-emerald-500 transition-all w-fit">
-                        Đăng bình luận
-                    </button>
-                </div>
-            </div>
+            <CommentWriter handleWhenComment={handleWhenComment}/>
             <hr className="opacity-40"/>
             {
                 comments.map((comment) => {
                     return (
-                        <CommentTreeItem key={comment.id} comment={comment} level={1}/>
+                        <CommentTreeItem key={comment.id} comment={comment} level={1} 
+                            handleWhenReply={handleWhenReply}/>
                     );
                 })
             }

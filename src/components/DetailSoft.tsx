@@ -9,6 +9,7 @@ import { convertDateToString, numberToFloat } from "../util/convert";
 import ContentSoft from "./detailsoft/ContentSoft";
 import RelativeSoft from "./detailsoft/RelativeSoft";
 import CommentTree from "./detailsoft/CommentTree";
+import { findCommentById } from "../util/commentUtil";
 
 const DetailSoft = () => {
     const idSoft = useLoaderData();
@@ -44,7 +45,57 @@ const DetailSoft = () => {
         .catch((err) => {
             console.log(err);
         })
-    }, [idSoft])
+    }, [idSoft]);
+
+    const handleWhenComment = (commenterId: number, content: string) => {
+        const formData = new FormData();
+        formData.append("commenterId", commenterId + "");
+        formData.append("content", content!);
+        api.postFile(`/comment/to/${idSoft}`, formData)
+        .then((res) => {
+            return res?.json();
+        })
+        .then((data: { status: "success" | "error", option: SoftComment}) => {
+            setComments(comments => {
+                if(comments === null) return [data.option];
+                return [data.option, ...comments]
+            });
+            console.log(data);
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+    }
+
+    const handleWhenReply = (commenterId: number, content: string, receivedCommentId: number) => {
+        const formData = new FormData();
+        formData.append("commenterId", commenterId + "");
+        formData.append("content", content!);
+        formData.append("receivedCommentId", receivedCommentId + "");
+        api.postFile(`/comment/replyto/${idSoft}`, formData)
+        .then((res) => {
+            return res?.json();
+        })
+        .then((data: { status: "success" | "error", option: SoftComment}) => {
+            setComments(comments => {
+                if(comments === null) return null;
+                const receivedComment = findCommentById(receivedCommentId, comments);
+                if(typeof receivedComment !== "undefined"){
+                    if(receivedComment.replyComments === null){
+                        receivedComment.replyComments = [data.option];
+                    }
+                    else{
+                        receivedComment.replyComments = [data.option, ...receivedComment.replyComments];
+                    }
+                }
+                return [...comments];
+            });
+            console.log(data);
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+    }
 
     return (
         <div className="mx-14 my-4 bg-slate-700 text-white">
@@ -84,7 +135,10 @@ const DetailSoft = () => {
                             <ContentSoft content={soft.content}/>
                             {
                                 comments !== null &&
-                                <CommentTree comments={comments}/>
+                                <CommentTree 
+                                    comments={comments}
+                                    handleWhenComment={handleWhenComment}
+                                    handleWhenReply={handleWhenReply}/>
                             }
                         </div>
                         <RelativeSoft soft={soft}/>

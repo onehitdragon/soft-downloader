@@ -1,8 +1,11 @@
-import { memo } from "react";
+import { memo, useState } from "react";
 import { ClockIcon, TrendingUpIcon, ChatAlt2Icon} from "@heroicons/react/outline";
 import { compareDateToPast } from "../../util/convert";
+import CommentWriter from "./CommentWriter";
 
-const CommentTreeItem = ({ comment, level, parentComment }: { comment: SoftComment, level: number, parentComment?: SoftComment }) => {
+const CommentTreeItem = ({ comment, level, parentComment, handleWhenReply }: { comment: SoftComment, level: number, parentComment?: SoftComment, handleWhenReply: (commenterId: number, content: string, receivedCommentId: number) => any} ) => {
+    const [showingCommenterWriter, setShowingCommenterWriter] = useState(false);
+    
     return (
         <div>
             <div className="flex m-3 ml-0">
@@ -37,29 +40,22 @@ const CommentTreeItem = ({ comment, level, parentComment }: { comment: SoftComme
                             { comment.content }
                         </span>
                     </div>
-                    <button className="mt-1.5 ml-1.5 flex items-center opacity-80 hover:opacity-100 transition-all">
+                    <button className="mt-1.5 ml-1.5 flex items-center opacity-80 hover:opacity-100 transition-all"
+                        onClick={(() => { setShowingCommenterWriter(true) })}>
                         <TrendingUpIcon className="w-5 mr-1"/>
                         <span className="text-sm">Trả lời</span>
                     </button>
                 </div>
             </div>
-
-            {/*  */}
-            <div className="flex m-3 ml-0">
-                <div className="">
-                    <img className="w-12 rounded-full bg-white" alt="error"
-                        src="/gamer-icon.png"/>
-                </div>
-                <div className="flex flex-col items-end ml-3 flex-1">
-                    <textarea className="outline-0 text-black rounded p-1.5 w-full"
-                        placeholder="Trả lời..."/>
-                    <button className="mt-1.5 bg-emerald-400 px-3 py-1 rounded
-                        hover:bg-emerald-500 transition-all w-fit">
-                        Đăng bình luận
-                    </button>
-                </div>
-            </div>
-
+            {
+                showingCommenterWriter &&
+                <CommentWriter handleWhenComment={
+                    (commenterId, content) => { 
+                        handleWhenReply(commenterId, content, comment.id);
+                        setShowingCommenterWriter(false);
+                    }
+                }/>
+            }
             {/* reply */}
             <div className={level <= 3 ? "ml-12" : ""}>
                 {
@@ -69,7 +65,8 @@ const CommentTreeItem = ({ comment, level, parentComment }: { comment: SoftComme
                             <CommentTreeItem key={replyComment.id}
                                 comment={replyComment}
                                 level={level+1}
-                                parentComment={comment}/>
+                                parentComment={comment}
+                                handleWhenReply={handleWhenReply}/>
                         );
                     })
                 }
