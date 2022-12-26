@@ -1,4 +1,5 @@
-import { memo } from "react"
+import { memo } from "react";
+import { numberToFloat } from "../../util/convert";
 
 const SmallTotalBox = ({ title, total, imageUrl }: { title: string, total: number, imageUrl: string }) => {
     return (
@@ -6,7 +7,7 @@ const SmallTotalBox = ({ title, total, imageUrl }: { title: string, total: numbe
             <img alt="error" src={imageUrl}
                 className="mr-2.5 w-12 h-12"/>
             <div className="flex flex-col">
-                <span className="text-xl font-bold">{total}</span>
+                <span className="text-xl font-bold">{numberToFloat(total)}</span>
                 <span className="font-medium">{title}</span>
             </div>
         </div>

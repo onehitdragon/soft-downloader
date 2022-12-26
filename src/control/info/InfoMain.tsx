@@ -8,7 +8,6 @@ const InfoMain = () => {
             <NormalTilteBar title="Thông tin"/>
             <InfoBody />
         </>
-        
     );
 }
 

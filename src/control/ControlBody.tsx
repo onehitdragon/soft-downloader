@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { MenuItemType } from "../feature/control/MenuItemType.enum";
 import { RootState } from "../feature/store";
 import InfoMain from "./info/InfoMain";
+import PostMain from "./post/PostMain";
 
 const ControlBody = () => {
     const curMenuItem = useSelector<RootState, MenuItemType>(state => state.controlMenu.curMenuItem);
@@ -12,6 +13,10 @@ const ControlBody = () => {
             {
                 curMenuItem === MenuItemType.Info &&
                 <InfoMain />
+            }
+            {
+                curMenuItem === MenuItemType.Post &&
+                <PostMain />
             }
         </div>
     );

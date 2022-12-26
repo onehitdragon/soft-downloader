@@ -5,6 +5,7 @@ import homeReducer from "./home/homeSlice";
 import filterReducer from "./filter/filterSlice";
 import profileReducer from "./profile/profileSlice";
 import controlMenuReducer from "./control/controlMenuSlice";
+import controlReducer from "./control/controlSlice";
 
 const store = configureStore({
     reducer: {
@@ -12,7 +13,8 @@ const store = configureStore({
         home: homeReducer,
         filter: filterReducer,
         profile: profileReducer,
-        controlMenu: controlMenuReducer
+        controlMenu: controlMenuReducer,
+        control: controlReducer
     },
     middleware: [reduxThunk]
 });

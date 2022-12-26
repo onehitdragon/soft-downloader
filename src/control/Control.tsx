@@ -1,6 +1,7 @@
 import { memo, useEffect } from "react"
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
+import { loadInfoControl } from "../feature/control/controlSlice";
 import { RootState } from "../feature/store";
 import ControlBody from "./ControlBody";
 import ControlMenu from "./ControlMenu";
@@ -8,12 +9,16 @@ import ControlMenu from "./ControlMenu";
 const Control = () => {
     const user = useSelector<RootState, User | null>(state => state.profile.user);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         if(user === null || user.role.name === "User"){
             navigate("/home");
         }
-    }, [user, navigate])
+        else{
+            dispatch<any>(loadInfoControl());
+        }
+    }, [user, navigate, dispatch])
 
     return (
         user === null ?

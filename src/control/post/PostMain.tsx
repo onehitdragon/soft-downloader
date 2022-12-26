@@ -1,8 +1,13 @@
 import { memo } from "react"
+import NormalTilteBar from "../components/NormalTilteBar";
+import ViewAllPost from "./ViewAllPost";
 
 const PostMain = () => {
     return (
-        <div></div>
+        <>
+            <NormalTilteBar title="Bài viết"/>
+            <ViewAllPost />
+        </>
     );
 }
 

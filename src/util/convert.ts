@@ -1,7 +1,14 @@
 function numberToFloat(num: number){
     let result = "";
     while(parseInt(num / 1000 as any) !== 0){
-        result = "." + (num % 1000) + result;
+        let n: number | string = num % 1000;
+        if(n < 10){
+            n = "00" + n;
+        }
+        else if(n < 100){
+            n = "0" + n;
+        }
+        result = "." + n + result;
         num = parseInt(num / 1000 as any);
     }
     result = num + result;
