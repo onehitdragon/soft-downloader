@@ -127,7 +127,10 @@ const DetailSoft = () => {
                         <span className="mx-2">-</span>
                         <div className="flex">
                             <ChatAlt2Icon className="w-5"/>
-                            <span>127</span>
+                            &nbsp;
+                            <span>
+                                {comments !== null ? comments.length : "đang tải..."}
+                            </span>
                         </div>
                     </div>
                     <div className="mx-4 my-3 flex">

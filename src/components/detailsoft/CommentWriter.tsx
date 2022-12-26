@@ -28,7 +28,7 @@ const CommentWriter = ({ handleWhenComment }: { handleWhenComment: (commenterId:
                     onChange={(e) => { setContent(e.target.value) }}/>
                 <button className="mt-1.5 bg-emerald-400 px-3 py-1 rounded
                     hover:bg-emerald-500 transition-all w-fit"
-                    onClick={() => { handleWhenComment(user.id, content) }}>
+                    onClick={() => { handleWhenComment(user.id, content); setContent("") }}>
                     Đăng bình luận
                 </button>
             </div>

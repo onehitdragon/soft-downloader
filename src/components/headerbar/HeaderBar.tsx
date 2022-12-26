@@ -34,7 +34,9 @@ const HeaderBar = () => {
                     </>
                     :
                     <span className="mx-2 normal-case">
-                        Chào, <span className="text-red-400">{user.fullName}</span>
+                        Chào, <span className="text-red-400 cursor-pointer hover:underline" onClick={(() => {
+                            if(user.role.name === "Admin") navigate("/control");
+                        })}>{user.fullName}</span>
                     </span>
                 }
             </div>

@@ -4,13 +4,15 @@ import mainMenuReducer from "./mainMenu/mainMenuSlice";
 import homeReducer from "./home/homeSlice";
 import filterReducer from "./filter/filterSlice";
 import profileReducer from "./profile/profileSlice";
+import controlMenuReducer from "./control/controlMenuSlice";
 
 const store = configureStore({
     reducer: {
         mainMenu: mainMenuReducer,
         home: homeReducer,
         filter: filterReducer,
-        profile: profileReducer
+        profile: profileReducer,
+        controlMenu: controlMenuReducer
     },
     middleware: [reduxThunk]
 });

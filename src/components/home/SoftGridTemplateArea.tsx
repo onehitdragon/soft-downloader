@@ -1,5 +1,5 @@
 import { memo } from "react";
-import { ChatAlt2Icon, FireIcon } from "@heroicons/react/solid";
+import { FireIcon } from "@heroicons/react/solid";
 import { convertDateToString, numberToFloat } from "../../util/convert";
 import { useNavigate } from "react-router";
 import { BASE_URL } from "../../util/api";
@@ -36,10 +36,10 @@ const SoftGridTemplateArea = ({ softs }: { softs: Soft[] }) => {
                         <span>{numberToFloat(firstSoft.amountView)}</span>
                     </div>
                     <div className="flex-1"></div>
-                    <div className="flex">
+                    {/* <div className="flex">
                         <ChatAlt2Icon className="w-5"/>
                         <span>127</span>
-                    </div>
+                    </div> */}
                 </div>
             </div>
             <ul className="w-1/2">

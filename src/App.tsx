@@ -9,6 +9,7 @@ import DetailSoft from './components/DetailSoft';
 import Filter from './components/Filter';
 import Login from './components/Login';
 import Register from './components/Register';
+import Control from './control/Control';
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
   {
     path: "/register",
     element: <Register />
+  },
+  {
+    path: "/control",
+    element: <Control />
   }
 ]);
 
