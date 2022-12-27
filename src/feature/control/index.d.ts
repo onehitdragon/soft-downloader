@@ -13,5 +13,10 @@ type Info = {
 }
 
 type ControlState = {
-    info: Info | null
+    info: Info | null,
+    softs: Soft[] | null
+}
+
+type PostContentModiferState = {
+    modifierContent: (TitleElement | TextElement | ParaElement | ListElement | ImageElement)[]
 }

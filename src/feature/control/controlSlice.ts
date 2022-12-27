@@ -4,7 +4,8 @@ import api from "../../util/api";
 import { RootState } from "../store";
 
 const init: ControlState = {
-    info: null
+    info: null,
+    softs: null
 }
 
 const controlSlice = createSlice({
@@ -13,12 +14,15 @@ const controlSlice = createSlice({
     reducers: {
         updateInfo: (state, action: { payload: Info }) => {
             state.info = action.payload;
-        }
+        },
+        updateSofts: (state, action: { payload: Soft[] }) => {
+            state.softs = action.payload;
+        },
     }
 });
 
 export default controlSlice.reducer;
-const { updateInfo } = controlSlice.actions;
+const { updateInfo, updateSofts } = controlSlice.actions;
 
 //thunk
 function loadInfoControl(){
@@ -41,4 +45,28 @@ function loadInfoControl(){
     return thunk;
 }
 
-export { loadInfoControl }
+function loadSoftControl(){
+    const thunk: ThunkAction<void, RootState, unknown, AnyAction> = (dispatch, getState) => {
+        if(getState().control.softs !== null) return;
+
+        api.get("/soft/getall")
+        .then((res) => {
+            return res?.json();
+        })
+        .then((data: Soft[]) => {
+            data.forEach((soft) => {
+                soft.content = (soft.content as any).replaceAll("\\", "\\\\");
+                soft.content = JSON.parse(soft.content as any);
+            })
+            console.log(data);
+            dispatch(updateSofts(data));
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+    }
+
+    return thunk;
+}
+
+export { loadInfoControl, loadSoftControl }

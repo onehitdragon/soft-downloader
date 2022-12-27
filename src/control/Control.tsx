@@ -1,7 +1,7 @@
 import { memo, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import { loadInfoControl } from "../feature/control/controlSlice";
+import { loadInfoControl, loadSoftControl } from "../feature/control/controlSlice";
 import { RootState } from "../feature/store";
 import ControlBody from "./ControlBody";
 import ControlMenu from "./ControlMenu";
@@ -17,6 +17,7 @@ const Control = () => {
         }
         else{
             dispatch<any>(loadInfoControl());
+            dispatch<any>(loadSoftControl());
         }
     }, [user, navigate, dispatch])
 
@@ -31,7 +32,7 @@ const Control = () => {
                 <div className="flex flex-col p-5 items-center cursor-default">
                     <img className="w-16 rounded-full bg-white" alt="error"
                         src="/gamer-icon.png"/>
-                    <span className="mt-2.5 text-red-400 font-medium">Nguyễn Văn Admin</span>
+                    <span className="mt-2.5 text-red-400 font-medium">{user.fullName}</span>
                     <span className="opacity-80 text-sm">@Admin</span>
                 </div>
                 <ControlMenu />

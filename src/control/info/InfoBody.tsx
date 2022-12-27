@@ -13,7 +13,7 @@ const InfoBody = () => {
         <></>
         :
         <div className="flex flex-wrap">
-            <SmallTotalBox title="Tổng lượt xem" total={1614001} imageUrl="/icon/icons8-phoenix-96.png"/>
+            <SmallTotalBox title="Tổng lượt xem" total={info.totalView} imageUrl="/icon/icons8-phoenix-96.png"/>
             <SmallTotalBox title="Tổng người dùng" total={info.totalUser} imageUrl="/icon/icons8-dinosaur-egg-96.png"/>
             <ListTotalBox title="Hiện tại" list={[
                 {
