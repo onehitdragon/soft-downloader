@@ -1,25 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { PostContentModiferState } from "..";
+import { ImageElementUpload, PostContentModiferState } from "..";
 
 const init: PostContentModiferState = {
-    modifierContent: [],
-    files: []
+    modifierContent: []
 }
-
 const PostContentModiferSlice = createSlice({
     name: "PostContentModiferSlice",
     initialState: init,
     reducers: {
-        updateModifierContent: (state, action: { payload: (TitleElement | TextElement | ParaElement | ListElement | ImageElement)[] }) => {
+        updateModifierContent: (state, action: { payload: (TitleElement | TextElement | ParaElement | ListElement | ImageElementUpload)[] }) => {
             state.modifierContent = action.payload;
         },
-        addElementToModifierContent: (state, action: { payload: (TitleElement | TextElement | ParaElement | ListElement | ImageElement) }) => {
+        addElementToModifierContent: (state, action: { payload: (TitleElement | TextElement | ParaElement | ListElement | ImageElementUpload) }) => {
             state.modifierContent.push(action.payload);
         },
-        addFile: (state, action: { payload: File }) => {
-            state.files.push(action.payload);
-        },
-        removeElementFromModifierContent: (state, action: { payload: (TitleElement | TextElement | ParaElement | ListElement | ImageElement) }) => {
+        removeElementFromModifierContent: (state, action: { payload: (TitleElement | TextElement | ParaElement | ListElement | ImageElementUpload) }) => {
             state.modifierContent = state.modifierContent.filter((e) => {
                 if(action.payload.type === "para" || action.payload.type === "title"){
                     if(e.type === action.payload.type && e.value === action.payload.value){
@@ -30,7 +25,7 @@ const PostContentModiferSlice = createSlice({
                     }
                 }
                 if(action.payload.type === "image"){
-                    if(e.type === action.payload.type && e.url === action.payload.url){
+                    if(e.type === action.payload.type && e.file.name === action.payload.file.name){
                         return false;
                     }
                 }
@@ -41,5 +36,5 @@ const PostContentModiferSlice = createSlice({
 });
 
 export default PostContentModiferSlice.reducer;
-export const { updateModifierContent, addElementToModifierContent, addFile,
+export const { updateModifierContent, addElementToModifierContent,
     removeElementFromModifierContent } = PostContentModiferSlice.actions;

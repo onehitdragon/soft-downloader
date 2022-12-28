@@ -1,6 +1,6 @@
 import { ChangeEvent, memo, useRef } from "react"
 import { useDispatch } from "react-redux";
-import { addElementToModifierContent, addFile } from "../../../feature/control/controlPost/PostContentModiferSlice";
+import { addElementToModifierContent } from "../../../feature/control/controlPost/PostContentModiferSlice";
 import NormalButton from "../../components/NormalButton";
 
 const ButtonAddImageBox = () => {
@@ -14,15 +14,10 @@ const ButtonAddImageBox = () => {
     const handleOnUpload = (e: ChangeEvent) => {
         const file = (e.target as HTMLInputElement).files?.[0];
         if(typeof file !== "undefined"){
-            const fr = new FileReader();
-            fr.onload = (e) => {
-                dispatch(addFile(file));
-                dispatch(addElementToModifierContent({
-                    type: "image",
-                    url: e.target?.result as string
-                }));
-            }
-            fr.readAsDataURL(file);
+            dispatch(addElementToModifierContent({
+                type: "image",
+                file
+            }));
         }
     }
 

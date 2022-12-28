@@ -1,6 +1,8 @@
 import { memo } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 import { RootState } from "../../feature/store";
+import NormalButton from "../components/NormalButton";
 import NormalTable from "../components/NormalTable";
 import NormalTableBody from "../components/NormalTableBody";
 import NormalTableColumn from "../components/NormalTableColumn";
@@ -9,6 +11,7 @@ import NormalTableRow from "../components/NormalTableRow";
 
 const ViewAllPost = () => {
     const softs = useSelector<RootState, Soft[] | null>(state => state.control.softs);
+    const navigate = useNavigate();
 
     return (
         softs === null ?
@@ -16,7 +19,7 @@ const ViewAllPost = () => {
         :
         <NormalTable>
             <NormalTableHead 
-                titles={["Id", "Tiêu đề", "Nội dung", "Tác giả", "Lượt xem", "Ngày tạo", "Thể loại"]}
+                titles={["Id", "Tiêu đề", "Nội dung", "Tác giả", "Lượt xem", "Ngày tạo", "Thể loại", "", ""]}
                 />
             <NormalTableBody>
                     {
@@ -30,7 +33,8 @@ const ViewAllPost = () => {
                                         <span>{soft.title}</span>
                                     </NormalTableColumn>
                                     <NormalTableColumn>
-                                        <span>Xem nội dung</span>
+                                        <span className="cursor-pointer hover:underline"
+                                            onClick={() => { navigate("/soft/" + soft.id) }}>Xem nội dung</span>
                                     </NormalTableColumn>
                                     <NormalTableColumn>
                                         <span>{soft.author.fullName}</span>
@@ -55,6 +59,14 @@ const ViewAllPost = () => {
                                                 );
                                             })
                                         }
+                                    </NormalTableColumn>
+                                    <NormalTableColumn>
+                                        <NormalButton label="Sửa"
+                                            handleOnClick={() => {  }}/>
+                                    </NormalTableColumn>
+                                    <NormalTableColumn>
+                                        <NormalButton label="Xoá" className="bg-red-500"
+                                            handleOnClick={() => {  }}/>
                                     </NormalTableColumn>
                                 </NormalTableRow>
                             );

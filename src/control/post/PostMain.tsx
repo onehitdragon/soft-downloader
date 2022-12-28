@@ -1,16 +1,29 @@
 import { memo, useState } from "react"
+import { useDispatch, useSelector } from "react-redux";
+import { updateCurCategory, updateCurChildCategory, updateIsAdd, updateTitle } from "../../feature/control/controlPost/PostFormSlice";
+import { RootState } from "../../feature/store";
 import NormalButton from "../components/NormalButton";
 import NormalTilteBar from "../components/NormalTilteBar";
-import AddPostForm from "./AddPostForm";
+import PostForm from "./PostForm";
 import ViewAllPost from "./ViewAllPost";
 
 enum PostMainView{
     ViewAllPost,
-    AddPostForm
+    PostForm
 }
 
 const PostMain = () => {
     const [curView, setCurView] = useState(PostMainView.ViewAllPost);
+    const categories = useSelector<RootState, Category[] | null>(state => state.control.categories);
+    const dispatch = useDispatch();
+
+    const handleAddPost = () => {
+        if (categories === null) return;
+        dispatch(updateTitle(""));
+        dispatch(updateCurCategory(categories[0]));
+        dispatch(updateCurChildCategory(categories[0].childCategories[0]));
+        dispatch(updateIsAdd(true));
+    }
 
     return (
         <>
@@ -26,7 +39,10 @@ const PostMain = () => {
                 curView === PostMainView.ViewAllPost &&
                 <div className="my-3">
                     <NormalButton label="Tạo bài viết"
-                        handleOnClick={() => { setCurView(PostMainView.AddPostForm) }} />
+                        handleOnClick={() => {
+                            handleAddPost();
+                            setCurView(PostMainView.PostForm) 
+                        }} />
                 </div>
             }
             {
@@ -34,8 +50,10 @@ const PostMain = () => {
                 <ViewAllPost />
             }
             {
-                curView === PostMainView.AddPostForm &&
-                <AddPostForm />
+                curView === PostMainView.PostForm &&
+                <PostForm onSubmit={() => {
+                    setCurView(PostMainView.ViewAllPost);
+                }}/>
             }
         </>
     );

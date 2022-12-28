@@ -18,7 +18,18 @@ type ControlState = {
     categories: Category[] | null
 }
 
+type ImageElementUpload = {
+    type: "image",
+    file: File
+}
+
 type PostContentModiferState = {
-    modifierContent: (TitleElement | TextElement | ParaElement | ListElement | ImageElement)[],
-    files: File[]
+    modifierContent: (TitleElement | TextElement | ParaElement | ListElement | ImageElementUpload)[]
+}
+
+type PostFormState = {
+    title: string,
+    curCategory: Category | null,
+    curChildCategory: ChildCategory | null,
+    isAdd: boolean
 }

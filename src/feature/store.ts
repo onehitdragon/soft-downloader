@@ -7,6 +7,7 @@ import profileReducer from "./profile/profileSlice";
 import controlMenuReducer from "./control/controlMenuSlice";
 import controlReducer from "./control/controlSlice";
 import PostContentModiferReducer from "./control/controlPost/PostContentModiferSlice";
+import PostFormReducer from "./control/controlPost/PostFormSlice";
 
 const store = configureStore({
     reducer: {
@@ -17,6 +18,7 @@ const store = configureStore({
         controlMenu: controlMenuReducer,
         control: controlReducer,
         postModifierContent: PostContentModiferReducer,
+        postForm: PostFormReducer
     },
     middleware: [reduxThunk]
 });

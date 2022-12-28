@@ -90,27 +90,4 @@ function loadCategoryControl(){
     return thunk;
 }
 
-function createPostThunk(title: string, whenLoaded: Function){
-    const thunk: ThunkAction<void, RootState, unknown, AnyAction> = (dispatch, getState) => {
-        const formData = new FormData();
-        formData.append("title", title);
-        formData.append("content", JSON.stringify(getState().postModifierContent.modifierContent));
-        console.log(JSON.stringify(getState().postModifierContent.modifierContent));
-        
-        // api.postFile("/soft/add")
-        // .then((res) => {
-        //     return res?.json();
-        // })
-        // .then((data: Category[]) => {
-            
-        // })
-        // .catch((err) => {
-        //     console.log(err);
-        // })
-    }
-
-    return thunk;
-}
-
-export { loadInfoControl, loadSoftControl, loadCategoryControl,
-    createPostThunk}
+export { loadInfoControl, loadSoftControl, loadCategoryControl }

@@ -1,5 +1,6 @@
 import { memo } from "react"
 import { useSelector } from "react-redux";
+import { ImageElementUpload } from "../../../feature/control";
 import { RootState } from "../../../feature/store";
 import ButtonAddImageBox from "./ButtonAddImageBox";
 import ButtonAddTextBox from "./ButtonAddTextBox";
@@ -10,7 +11,7 @@ import TextBox from "./TextBox";
 import TitleBarBox from "./TitleBarBox";
 
 const PostContentModifer = () => {
-    const modifierContent = useSelector<RootState, (TitleElement | TextElement | ParaElement | ListElement | ImageElement)[]>(state => state.postModifierContent.modifierContent);
+    const modifierContent = useSelector<RootState, (TitleElement | TextElement | ParaElement | ListElement | ImageElementUpload)[]>(state => state.postModifierContent.modifierContent);
     
     return (
         <div className="flex">
@@ -24,7 +25,7 @@ const PostContentModifer = () => {
                         }
                         else if(e.type === "image"){
                             return (
-                                <ImageBox key={idx} imageElement={e}/>
+                                <ImageBox key={idx} imageElementUpload={e}/>
                             );
                         }
                         else if(e.type === "text" || e.type === "para"){

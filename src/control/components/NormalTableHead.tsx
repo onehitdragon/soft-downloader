@@ -5,9 +5,9 @@ const NormalTableHead = ({ titles }: { titles: string[] }) => {
         <thead>
             <tr className="bg-red-400">
                 {
-                    titles?.map((title) => {
+                    titles?.map((title, idx) => {
                         return (
-                            <td className="p-2.5 text-center font-medium min-w-fit" key={title}>
+                            <td className="p-2.5 text-center font-medium min-w-fit" key={idx}>
                                 {title}
                             </td>
                         );

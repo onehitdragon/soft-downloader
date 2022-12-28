@@ -1,27 +1,22 @@
-import { memo, useEffect, useState } from "react"
+import { memo, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux";
-import { createPostThunk } from "../../feature/control/controlSlice";
+import { createPostThunk, updateCurCategory, updateCurChildCategory, updateTitle } from "../../feature/control/controlPost/PostFormSlice";
 import { RootState } from "../../feature/store";
 import NormalButton from "../components/NormalButton";
 import NormalInput from "../components/NormalInput";
 import NormalOption from "../components/NormalOption";
 import PostContentModifer from "./ContentModify/PostContentModifer";
 
-const AddPostForm = () => {
-    const [titlePost, setTitlePost] = useState("");
+const PostForm = ({ onSubmit }: { onSubmit: Function }) => {
+    const titlePost = useSelector<RootState, string>(state => state.postForm.title);
+    const curSelectCategory = useSelector<RootState, Category | null>(state => state.postForm.curCategory);
+    const curSelectChildCategory = useSelector<RootState, ChildCategory | null>(state => state.postForm.curChildCategory);
     const categories = useSelector<RootState, Category[] | null>(state => state.control.categories);
-    const [curSelectCategory, setCurSelectCategory] = useState<Category | null>(null);
-    const [curSelectChildCategory, setCurSelectChildCategory] = useState<ChildCategory | null>(null);
+    const isAdd = useSelector<RootState, boolean>(state => state.postForm.isAdd);
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        if(categories === null) return;
-        setCurSelectCategory(categories[0]);
-        setCurSelectChildCategory(categories[0].childCategories[0]);
-    }, [categories]);
-
     return (
-        (categories === null || curSelectCategory === null || curSelectCategory === null) ?
+        (categories === null || curSelectCategory === null || curSelectChildCategory === null) ?
         <></>
         :
         (
@@ -29,7 +24,7 @@ const AddPostForm = () => {
                 <span className="font-medium my-2">Tiêu đề bài viết<span className="opacity-80 ml-1"> *</span></span>
                 <NormalInput placeholder="Tiêu đề"
                     value={titlePost}
-                    onChange={(v) => { setTitlePost(v) }}/>
+                    onChange={(v) => { dispatch(updateTitle(v)) }}/>
                 <span className="font-medium my-2">Nội dung<span className="opacity-80 ml-1"> *</span></span>
                 <PostContentModifer />
                 <span className="font-medium my-2">Chọn thể loại<span className="opacity-80 ml-1"> *</span></span>
@@ -40,8 +35,8 @@ const AddPostForm = () => {
                             return (i as Category).name;
                         }}
                         handleOnSelected={(i) => {
-                            setCurSelectCategory(i as Category);
-                            setCurSelectChildCategory((i as Category).childCategories[0]);
+                            dispatch(updateCurCategory(i as Category));
+                            dispatch(updateCurChildCategory((i as Category).childCategories[0]));
                         }}/>
                     <div className="mx-1.5"></div>
                     <NormalOption listItem={curSelectCategory.childCategories}
@@ -50,21 +45,33 @@ const AddPostForm = () => {
                             return (i as ChildCategory).name;
                         }}
                         handleOnSelected={(i) => {
-                            setCurSelectChildCategory(i as ChildCategory);
+                            dispatch(updateCurChildCategory((i as ChildCategory)));
                         }}
                     />
                 </div>
-                <NormalButton label="Tạo bài viết"
-                    handleOnClick={() => { 
-                        dispatch<any>(createPostThunk(
-                            titlePost,
-                            () => {  }
-                        ));
-                    }}
-                />
+                {
+                    isAdd ?
+                    <NormalButton label="Tạo bài viết"
+                        handleOnClick={() => {
+                            dispatch<any>(createPostThunk(
+                                titlePost,
+                                curSelectChildCategory.id,
+                                () => { 
+                                    onSubmit();
+                                }
+                            ));
+                        }}
+                    />
+                    :
+                    <NormalButton label="Sửa bài viết"
+                        handleOnClick={() => { 
+                            
+                        }}
+                    />
+                }
             </div>
         )
     );
 }
 
-export default memo(AddPostForm);
+export default memo(PostForm);

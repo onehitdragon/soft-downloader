@@ -80,7 +80,3 @@ const SoftCategoryGridTemplateArea = ({ softs }: { softs: Soft[] }) => {
 }
 
 export default memo(SoftCategoryGridTemplateArea);
-
-function dispatch<T>(arg0: any) {
-    throw new Error("Function not implemented.");
-}
