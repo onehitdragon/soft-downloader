@@ -1,4 +1,4 @@
-import { memo, useEffect } from "react"
+import { memo } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import { createPostThunk, updateCurCategory, updateCurChildCategory, updateTitle } from "../../feature/control/controlPost/PostFormSlice";
 import { RootState } from "../../feature/store";
@@ -57,7 +57,7 @@ const PostForm = ({ onSubmit }: { onSubmit: Function }) => {
                                 titlePost,
                                 curSelectChildCategory.id,
                                 () => { 
-                                    onSubmit();
+                                    onSubmit()
                                 }
                             ));
                         }}

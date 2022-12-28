@@ -1,5 +1,6 @@
 import { memo, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
+import { updateModifierContent } from "../../feature/control/controlPost/PostContentModiferSlice";
 import { updateCurCategory, updateCurChildCategory, updateIsAdd, updateTitle } from "../../feature/control/controlPost/PostFormSlice";
 import { RootState } from "../../feature/store";
 import NormalButton from "../components/NormalButton";
@@ -20,6 +21,7 @@ const PostMain = () => {
     const handleAddPost = () => {
         if (categories === null) return;
         dispatch(updateTitle(""));
+        dispatch(updateModifierContent([]));
         dispatch(updateCurCategory(categories[0]));
         dispatch(updateCurChildCategory(categories[0].childCategories[0]));
         dispatch(updateIsAdd(true));
@@ -47,7 +49,9 @@ const PostMain = () => {
             }
             {
                 curView === PostMainView.ViewAllPost &&
-                <ViewAllPost />
+                <ViewAllPost onModify={() => {
+                    setCurView(PostMainView.PostForm);
+                }}/>
             }
             {
                 curView === PostMainView.PostForm &&

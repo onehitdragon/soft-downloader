@@ -1,7 +1,11 @@
 import { memo } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
+import { ImageElementUpload } from "../../feature/control";
+import { updateModifierContent } from "../../feature/control/controlPost/PostContentModiferSlice";
+import { removePostThunk, updateCurCategory, updateCurChildCategory, updateIsAdd, updateTitle } from "../../feature/control/controlPost/PostFormSlice";
 import { RootState } from "../../feature/store";
+import { BASE_URL } from "../../util/api";
 import NormalButton from "../components/NormalButton";
 import NormalTable from "../components/NormalTable";
 import NormalTableBody from "../components/NormalTableBody";
@@ -9,9 +13,50 @@ import NormalTableColumn from "../components/NormalTableColumn";
 import NormalTableHead from "../components/NormalTableHead";
 import NormalTableRow from "../components/NormalTableRow";
 
-const ViewAllPost = () => {
+const ViewAllPost = ({ onModify }: { onModify: Function }) => {
     const softs = useSelector<RootState, Soft[] | null>(state => state.control.softs);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const categories = useSelector<RootState, Category[] | null>(state => state.control.categories);
+
+    const handleModifyButton = (soft: Soft) => {
+        if (categories === null) return;
+        dispatch(updateTitle(soft.title));
+        const allImageElementPromise = soft.content.map((e) => {
+            if(e.type === "image"){
+                return new Promise<ImageElementUpload>((resolve) => {
+                    fetch(BASE_URL + e.url)
+                    .then((res) => {
+                        return res.blob();
+                    })
+                    .then((blob) => {
+                        resolve({
+                            type: "image",
+                            file: new File([blob], e.url.split("/").at(-1)!)
+                        })
+                    })
+                });
+            }
+            return undefined;
+        });
+        Promise.all(allImageElementPromise)
+        .then((imageElementUploads) => {
+            dispatch(updateModifierContent(
+                soft.content.map((e, idx) => {
+                    if(e.type === "image"){
+                        return imageElementUploads[idx]!;
+                    }
+                    return {...e}
+                })
+            ));
+        })
+        dispatch(updateCurCategory(categories.find((p) => {
+            return p.childCategories.find(c => c.id === soft.childCategories[0].id);
+        })!));
+        dispatch(updateCurChildCategory(soft.childCategories[0]));
+        dispatch(updateIsAdd(false));
+        onModify();
+    }
 
     return (
         softs === null ?
@@ -62,11 +107,17 @@ const ViewAllPost = () => {
                                     </NormalTableColumn>
                                     <NormalTableColumn>
                                         <NormalButton label="Sửa"
-                                            handleOnClick={() => {  }}/>
+                                            handleOnClick={() => {
+                                                handleModifyButton(soft);
+                                            }}/>
                                     </NormalTableColumn>
                                     <NormalTableColumn>
                                         <NormalButton label="Xoá" className="bg-red-500"
-                                            handleOnClick={() => {  }}/>
+                                            handleOnClick={() => { 
+                                                dispatch<any>(removePostThunk(soft.id, () => {
+                                                    
+                                                }));
+                                            }}/>
                                     </NormalTableColumn>
                                 </NormalTableRow>
                             );

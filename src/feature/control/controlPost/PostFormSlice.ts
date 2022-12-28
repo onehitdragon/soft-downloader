@@ -2,6 +2,7 @@ import { AnyAction, createSlice, ThunkAction } from "@reduxjs/toolkit";
 import { PostFormState } from "..";
 import api from "../../../util/api";
 import { RootState } from "../../store";
+import { removeOneSoft } from "../controlSlice";
 
 const init: PostFormState = {
     title: "",
@@ -66,4 +67,23 @@ function createPostThunk(title: string, childCategoryId: number, whenLoaded: Fun
     return thunk;
 }
 
-export { createPostThunk }
+function removePostThunk(id: number, whenLoaded: Function){
+    const thunk: ThunkAction<void, RootState, unknown, AnyAction> = (dispatch, getState) => {
+        api.delete("/soft/" + id)
+        .then((res) => {
+            return res?.json();
+        })
+        .then((data) => {
+            whenLoaded();
+            dispatch(removeOneSoft(id));
+            console.log(data);
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+    }
+
+    return thunk;
+}
+
+export { createPostThunk, removePostThunk }

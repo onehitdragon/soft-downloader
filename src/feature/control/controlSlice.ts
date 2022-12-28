@@ -21,12 +21,19 @@ const controlSlice = createSlice({
         },
         updateCategories: (state, action: { payload: Category[] }) => {
             state.categories = action.payload;
+        },
+        removeOneSoft: (state, action: { payload: number }) => {
+            if(state.softs === null) return;
+            state.softs = state.softs.filter((s) => {
+                return s.id !== action.payload;
+            })
         }
     }
 });
 
 export default controlSlice.reducer;
 const { updateInfo, updateSofts, updateCategories } = controlSlice.actions;
+export const { removeOneSoft } = controlSlice.actions;
 
 //thunk
 function loadInfoControl(){
