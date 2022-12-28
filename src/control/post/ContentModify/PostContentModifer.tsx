@@ -1,7 +1,7 @@
 import { memo } from "react"
 import { useSelector } from "react-redux";
 import { RootState } from "../../../feature/store";
-import NormalButton from "../../components/NormalButton";
+import ButtonAddImageBox from "./ButtonAddImageBox";
 import ButtonAddTextBox from "./ButtonAddTextBox";
 import ButtonAddTitleBarBox from "./ButtonAddTitleBarBox";
 import ImageBox from "./ImageBox";
@@ -43,10 +43,9 @@ const PostContentModifer = () => {
             <div className="mx-1.5 border"></div>
             <div className="flex flex-col min-w-fit">
                 <ButtonAddTitleBarBox />
-                <NormalButton label="Thêm ảnh" className="bg-cyan-400 mb-1.5"
-                    handleOnClick={() => {}}/>
-                <NormalButton label="Thêm danh sách" className="bg-green-400 mb-1.5"
-                    handleOnClick={() => {}}/>
+                <ButtonAddImageBox />
+                {/* <NormalButton label="Thêm danh sách" className="bg-green-400 mb-1.5"
+                    handleOnClick={() => {}}/> */}
                 <ButtonAddTextBox />
             </div>
         </div>

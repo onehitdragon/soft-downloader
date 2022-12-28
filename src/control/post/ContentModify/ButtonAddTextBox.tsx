@@ -1,10 +1,13 @@
 import { memo, useState } from "react"
+import { useDispatch } from "react-redux";
+import { addElementToModifierContent } from "../../../feature/control/controlPost/PostContentModiferSlice";
 import NormalButton from "../../components/NormalButton";
 import NormalInput from "../../components/NormalInput";
 
 const ButtonAddTextBox = () => {
     const [adding, setAdding] = useState(false);
     const [text, setText] = useState("");
+    const dispatch = useDispatch();
 
     return (
         !adding ?
@@ -23,7 +26,14 @@ const ButtonAddTextBox = () => {
                     text !== "" &&
                     <NormalButton label="Đồng ý" className="bg-amber-400 ml-1.5"
                         handleOnClick={() => {
-
+                            setAdding(false);
+                            setText("");
+                            dispatch(addElementToModifierContent(
+                                {
+                                    type: "para",
+                                    value: text
+                                }
+                            ));
                         }}
                         />
                 }

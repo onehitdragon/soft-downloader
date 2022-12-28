@@ -5,7 +5,8 @@ import { RootState } from "../store";
 
 const init: ControlState = {
     info: null,
-    softs: null
+    softs: null,
+    categories: null
 }
 
 const controlSlice = createSlice({
@@ -18,11 +19,14 @@ const controlSlice = createSlice({
         updateSofts: (state, action: { payload: Soft[] }) => {
             state.softs = action.payload;
         },
+        updateCategories: (state, action: { payload: Category[] }) => {
+            state.categories = action.payload;
+        }
     }
 });
 
 export default controlSlice.reducer;
-const { updateInfo, updateSofts } = controlSlice.actions;
+const { updateInfo, updateSofts, updateCategories } = controlSlice.actions;
 
 //thunk
 function loadInfoControl(){
@@ -69,4 +73,44 @@ function loadSoftControl(){
     return thunk;
 }
 
-export { loadInfoControl, loadSoftControl }
+function loadCategoryControl(){
+    const thunk: ThunkAction<void, RootState, unknown, AnyAction> = (dispatch, getState) => {
+        api.get("/category/getall")
+        .then((res) => {
+            return res?.json();
+        })
+        .then((data: Category[]) => {
+            dispatch(updateCategories(data));
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+    }
+
+    return thunk;
+}
+
+function createPostThunk(title: string, whenLoaded: Function){
+    const thunk: ThunkAction<void, RootState, unknown, AnyAction> = (dispatch, getState) => {
+        const formData = new FormData();
+        formData.append("title", title);
+        formData.append("content", JSON.stringify(getState().postModifierContent.modifierContent));
+        console.log(JSON.stringify(getState().postModifierContent.modifierContent));
+        
+        // api.postFile("/soft/add")
+        // .then((res) => {
+        //     return res?.json();
+        // })
+        // .then((data: Category[]) => {
+            
+        // })
+        // .catch((err) => {
+        //     console.log(err);
+        // })
+    }
+
+    return thunk;
+}
+
+export { loadInfoControl, loadSoftControl, loadCategoryControl,
+    createPostThunk}

@@ -1,7 +1,7 @@
 import { memo, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import { loadInfoControl, loadSoftControl } from "../feature/control/controlSlice";
+import { loadCategoryControl, loadInfoControl, loadSoftControl } from "../feature/control/controlSlice";
 import { RootState } from "../feature/store";
 import ControlBody from "./ControlBody";
 import ControlMenu from "./ControlMenu";
@@ -18,6 +18,7 @@ const Control = () => {
         else{
             dispatch<any>(loadInfoControl());
             dispatch<any>(loadSoftControl());
+            dispatch<any>(loadCategoryControl());
         }
     }, [user, navigate, dispatch])
 

@@ -32,7 +32,7 @@ const Login = () => {
                     }
                 }
             ));
-        }, 2500)
+        }, 1000)
     }
 
     const user = useSelector<RootState, User | null>(state => state.profile.user);

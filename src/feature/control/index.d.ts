@@ -14,9 +14,11 @@ type Info = {
 
 type ControlState = {
     info: Info | null,
-    softs: Soft[] | null
+    softs: Soft[] | null,
+    categories: Category[] | null
 }
 
 type PostContentModiferState = {
-    modifierContent: (TitleElement | TextElement | ParaElement | ListElement | ImageElement)[]
+    modifierContent: (TitleElement | TextElement | ParaElement | ListElement | ImageElement)[],
+    files: File[]
 }
