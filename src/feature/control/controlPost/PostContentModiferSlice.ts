@@ -29,11 +29,43 @@ const PostContentModiferSlice = createSlice({
                         return false;
                     }
                 }
+                if(action.payload.type === "list"){
+                    if(e.type === action.payload.type){
+                        if(e.value.length !== action.payload.value.length){
+                            return true;
+                        }
+                        for(let i = 0; i < e.value.length; i++){
+                            if(!twoElementIsEqual(e.value[i], action.payload.value[i])){
+                                return true;
+                            }
+                        }
+                        return false;
+                    }
+                }
                 return true;
             });
         }
     }
 });
+
+function twoElementIsEqual(e1: string | TextElement | ParaElement, e2: string | TextElement | ParaElement){
+    if(typeof e1 === "string" && typeof e2 !== "string") return false;
+    if(typeof e1 !== "string" && typeof e2 === "string") return false;
+    if(typeof e1 === "string" && typeof e2 === "string"){
+        if(e1 === e2){
+            return true;
+        }
+        else return false;
+    }
+    if(typeof e1 !== "string" && typeof e2 !== "string"){
+        if(e1.type === e2.type){
+            if(e1.value === e2.value){
+                return true
+            }
+        }
+    }
+    return false;
+}
 
 export default PostContentModiferSlice.reducer;
 export const { updateModifierContent, addElementToModifierContent,

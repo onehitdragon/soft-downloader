@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { ImageElementUpload } from "../../feature/control";
 import { updateModifierContent } from "../../feature/control/controlPost/PostContentModiferSlice";
-import { removePostThunk, updateCurCategory, updateCurChildCategory, updateIsAdd, updateTitle } from "../../feature/control/controlPost/PostFormSlice";
+import { removePostThunk, updateCurCategory, updateCurChildCategory, updateIsAdd, updateSoftIdModify, updateTitle } from "../../feature/control/controlPost/PostFormSlice";
 import { RootState } from "../../feature/store";
 import { BASE_URL } from "../../util/api";
 import NormalButton from "../components/NormalButton";
@@ -55,6 +55,7 @@ const ViewAllPost = ({ onModify }: { onModify: Function }) => {
         })!));
         dispatch(updateCurChildCategory(soft.childCategories[0]));
         dispatch(updateIsAdd(false));
+        dispatch(updateSoftIdModify(soft.id));
         onModify();
     }
 

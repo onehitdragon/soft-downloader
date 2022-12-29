@@ -1,6 +1,6 @@
 import { memo } from "react"
 import { useDispatch, useSelector } from "react-redux";
-import { createPostThunk, updateCurCategory, updateCurChildCategory, updateTitle } from "../../feature/control/controlPost/PostFormSlice";
+import { createPostThunk, editPostThunk, updateCurCategory, updateCurChildCategory, updateTitle } from "../../feature/control/controlPost/PostFormSlice";
 import { RootState } from "../../feature/store";
 import NormalButton from "../components/NormalButton";
 import NormalInput from "../components/NormalInput";
@@ -57,7 +57,7 @@ const PostForm = ({ onSubmit }: { onSubmit: Function }) => {
                                 titlePost,
                                 curSelectChildCategory.id,
                                 () => { 
-                                    onSubmit()
+                                    onSubmit();
                                 }
                             ));
                         }}
@@ -65,7 +65,13 @@ const PostForm = ({ onSubmit }: { onSubmit: Function }) => {
                     :
                     <NormalButton label="Sửa bài viết"
                         handleOnClick={() => { 
-                            
+                            dispatch<any>(editPostThunk(
+                                titlePost,
+                                curSelectChildCategory.id,
+                                () => {
+                                    onSubmit();
+                                }
+                            ));
                         }}
                     />
                 }

@@ -31,5 +31,6 @@ type PostFormState = {
     title: string,
     curCategory: Category | null,
     curChildCategory: ChildCategory | null,
-    isAdd: boolean
+    isAdd: boolean,
+    softIdModify: number | null
 }

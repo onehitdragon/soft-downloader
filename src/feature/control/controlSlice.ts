@@ -22,10 +22,23 @@ const controlSlice = createSlice({
         updateCategories: (state, action: { payload: Category[] }) => {
             state.categories = action.payload;
         },
+        addOneSoft: (state, action: { payload: Soft }) => {
+            if(state.softs === null) return;
+            state.softs = [action.payload, ...state.softs];
+        },
         removeOneSoft: (state, action: { payload: number }) => {
             if(state.softs === null) return;
             state.softs = state.softs.filter((s) => {
                 return s.id !== action.payload;
+            })
+        },
+        updateOneSoft: (state, action: { payload: Soft }) => {
+            if(state.softs === null) return;
+            state.softs = state.softs.map((s) => {
+                if(s.id === action.payload.id){
+                    return action.payload;
+                }
+                return s;
             })
         }
     }
@@ -33,7 +46,7 @@ const controlSlice = createSlice({
 
 export default controlSlice.reducer;
 const { updateInfo, updateSofts, updateCategories } = controlSlice.actions;
-export const { removeOneSoft } = controlSlice.actions;
+export const { removeOneSoft, addOneSoft, updateOneSoft } = controlSlice.actions;
 
 //thunk
 function loadInfoControl(){

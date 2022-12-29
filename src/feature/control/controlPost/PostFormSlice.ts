@@ -2,13 +2,15 @@ import { AnyAction, createSlice, ThunkAction } from "@reduxjs/toolkit";
 import { PostFormState } from "..";
 import api from "../../../util/api";
 import { RootState } from "../../store";
-import { removeOneSoft } from "../controlSlice";
+import { addOneSoft, removeOneSoft, updateOneSoft } from "../controlSlice";
+import { v4 as uuidv4 } from "uuid";
 
 const init: PostFormState = {
     title: "",
     curCategory: null,
     curChildCategory: null,
-    isAdd: true
+    isAdd: true,
+    softIdModify: null
 }
 
 const PostFormSlice = createSlice({
@@ -27,11 +29,14 @@ const PostFormSlice = createSlice({
         updateIsAdd: (state, action: { payload: boolean }) => {
             state.isAdd = action.payload;
         },
+        updateSoftIdModify: (state, action: { payload: number }) => {
+            state.softIdModify = action.payload;
+        },
     }
 });
 
 export default PostFormSlice.reducer;
-export const { updateTitle, updateCurCategory, updateCurChildCategory, updateIsAdd } = PostFormSlice.actions;
+export const { updateTitle, updateCurCategory, updateCurChildCategory, updateIsAdd, updateSoftIdModify } = PostFormSlice.actions;
 
 function createPostThunk(title: string, childCategoryId: number, whenLoaded: Function){
     const thunk: ThunkAction<void, RootState, unknown, AnyAction> = (dispatch, getState) => {
@@ -39,10 +44,11 @@ function createPostThunk(title: string, childCategoryId: number, whenLoaded: Fun
         formData.append("title", title);
         const contents: (TitleElement | TextElement | ParaElement | ListElement | ImageElement)[] = getState().postModifierContent.modifierContent.map((e) => {
             if(e.type === "image"){
-                formData.append("images", e.file);
+                const file = new File([e.file], uuidv4() + e.file.name, { type: e.file.type, lastModified: e.file.lastModified });
+                formData.append("images", file);
                 return {
                     type: "image",
-                    url: "/images/soft/upload/" + e.file.name,
+                    url: "/images/soft/upload/" + file.name,
                 };
             }
             return {...e};
@@ -55,9 +61,12 @@ function createPostThunk(title: string, childCategoryId: number, whenLoaded: Fun
         .then((res) => {
             return res?.json();
         })
-        .then((data) => {
+        .then(({ option }: { option: Soft }) => {
+            option.content = (option.content as any).replaceAll("\\", "\\\\");
+            option.content = JSON.parse(option.content as any);
+            dispatch(addOneSoft(option));
             whenLoaded();
-            console.log(data);
+            console.log(option);
         })
         .catch((err) => {
             console.log(err);
@@ -86,4 +95,42 @@ function removePostThunk(id: number, whenLoaded: Function){
     return thunk;
 }
 
-export { createPostThunk, removePostThunk }
+function editPostThunk(title: string, childCategoryId: number, whenLoaded: Function){
+    const thunk: ThunkAction<void, RootState, unknown, AnyAction> = (dispatch, getState) => {
+        const formData = new FormData();
+        formData.append("title", title);
+        const contents: (TitleElement | TextElement | ParaElement | ListElement | ImageElement)[] = getState().postModifierContent.modifierContent.map((e) => {
+            if(e.type === "image"){
+                const file = new File([e.file], uuidv4() + e.file.name, { type: e.file.type, lastModified: e.file.lastModified });
+                formData.append("images", file);
+                return {
+                    type: "image",
+                    url: "/images/soft/upload/" + file.name,
+                };
+            }
+            return {...e};
+        });
+        formData.append("content", JSON.stringify(contents));
+        formData.append("authorId", getState().profile.user?.id + "");
+        formData.append("childCategoryId", childCategoryId + "");
+        
+        api.putFile("/soft/" + getState().postForm.softIdModify, formData)
+        .then((res) => {
+            return res?.json();
+        })
+        .then(({ option }: { option: Soft }) => {
+            option.content = (option.content as any).replaceAll("\\", "\\\\");
+            option.content = JSON.parse(option.content as any);
+            dispatch(updateOneSoft(option));
+            whenLoaded();
+            console.log(option);
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+    }
+
+    return thunk;
+}
+
+export { createPostThunk, removePostThunk, editPostThunk }
